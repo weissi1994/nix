@@ -1,0 +1,42 @@
+stages:
+  - check
+  - build
+
+default:
+  tags:
+    - nix
+
+check-flake:
+  stage: check
+  script:
+    - export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
+    - export NIXPKGS_ALLOW_UNFREE=1
+    - nix flake check --impure --all-systems
+
+build:
+  stage: build
+  rules:
+    - if: "$CI_COMMIT_TAG"
+      when: on_success
+    - changes:
+        - flake.lock
+        - flake.nix
+        - .gitlab-ci.yml
+      when: on_success
+      allow_failure: true
+    - when: never
+  parallel:
+    matrix:
+      - FORMAT: iso
+        HOST:
+          # - generic
+          - installer-sway
+          - installer-pantheon
+  variables:
+  script:
+    - export ARTIFACT_NAME="${CI_PROJECT_NAME}-${HOST}-${CI_COMMIT_REF_SLUG}_${CI_PIPELINE_CREATED_AT%T*}.$FORMAT"
+    - nix --accept-flake-config build ".#nixosConfigurations.$HOST.config.formats.$FORMAT"
+    - cp -L result $ARTIFACT_NAME
+  artifacts:
+    paths:
+      - ./*.iso
