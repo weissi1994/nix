@@ -435,12 +435,22 @@ trough {
   };
   wayland.windowManager.sway = {
     enable = true;
+    extraOptions = [
+      "--unsupported-gpu"
+    ];
     wrapperFeatures.gtk = true;
     extraSessionCommands = ''
       export _JAVA_AWT_WM_NONREPARENTING=1
-      export QT_QPA_PLATFORM=wayland
-      export XDG_CURRENT_DESKTOP=sway
       export GTK_THEME='Catppuccin-Mocha-Compact-Blue-Dark:dark'
+      export QT_AUTO_SCREEN_SCALE_FACTOR=1
+      export QT_QPA_PLATFORM=wayland
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export GDK_BACKEND=wayland
+      export XDG_CURRENT_DESKTOP=sway
+      export GBM_BACKEND=nvidia-drm
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export MOZ_ENABLE_WAYLAND=1
+      export WLR_NO_HARDWARE_CURSORS=1
     '';
     config = {
       gaps = {
@@ -634,7 +644,7 @@ trough {
       window.titlebar = false;
       workspaceAutoBackAndForth = true;
       output = {
-        "*" = { bg = "${background} fit #1d2021"; };
+        "*" = { bg = "${background} fill ${colorScheme.background}"; };
       };
     };
     extraConfig = ''

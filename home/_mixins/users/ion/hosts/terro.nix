@@ -14,15 +14,15 @@
         };
       };
       output = {
-        DP-3 = {
+        DP-1 = {
           resolution = "2560x1440";
           position = "0,0";
         };
-        DP-1 = {
+        DP-2 = {
           resolution = "2560x1440";
           position = "2560,400";
         };
-        DP-2 = {
+        DP-3 = {
           resolution = "2560x1440";
           position = "5120,0";
           #transform = "90";

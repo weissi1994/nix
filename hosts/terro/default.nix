@@ -1,19 +1,10 @@
-# Motherboard: ROG Crosshair VIII Impact
-# CPU:         AMD Ryzen 9 5950X
-# GPU:         NVIDIA RTX 3080Ti
-# RAM:         64GB DDR4
-# NVME:        2TB Corsair MP600
-# NVME:        4TB Corsair MP600
-# SATA:        4TB Samsung 870 QVO
-# SATA:        4TB Samsung 870 QVO
-
 { config, inputs, lib, pkgs, platform, hostname, modulesPath, ... }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.common-cpu-amd
-    #inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-    #inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     inputs.nixos-hardware.nixosModules.common-pc
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     (import ../_mixins/hardware/btrfs/disks.nix {
@@ -21,6 +12,7 @@
       hostname = "${hostname}";
     })
     ../_mixins/hardware/systemd-boot.nix
+    ../_mixins/hardware/nvidia.nix
     ../_mixins/services/pipewire.nix
   ];
 
@@ -35,12 +27,11 @@
   boot.initrd.systemd.enable = true;
   boot.consoleLogLevel = 0;
 
-  #hardware = {
-  #  nvidia = {
-  #    prime.offload.enable = false;
-  #  };
-  #  cpu.amd.updateMicrocode = true;
-  #};
+  hardware = {
+    nvidia = {
+      prime.offload.enable = false;
+    };
+  };
 
   # services = {
   #   hardware.openrgb = {
@@ -49,11 +40,6 @@
   #     package = pkgs.openrgb-with-all-plugins;
   #   };
   # };
-
-  # swapDevices = [{
-  #   device = "/swap/swapfile";
-  #   size = 8196;
-  # }];
 
   nixpkgs.hostPlatform = lib.mkDefault "${platform}";
 }

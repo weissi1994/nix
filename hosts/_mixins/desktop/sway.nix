@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
@@ -65,6 +65,7 @@ in
   # enable sway window manager
   programs.sway = {
     enable = true;
+    extraOptions = ["--unsupported-gpu"];
     wrapperFeatures.gtk = true; # so that gtk works properly
     extraPackages = with pkgs; [
       swaylock # lockscreen
