@@ -3,7 +3,9 @@ return {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
     config = function()
-      require("chatgpt").setup()
+      require("chatgpt").setup(
+        api_key_cmd = "/etc/profiles/per-user/ion/bin/gopass show -o secret/openapi",
+      )
     end,
     keys = {
       { "<leader>a", desc = "+ChatGPT" },

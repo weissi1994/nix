@@ -34,6 +34,14 @@ Inspired by: https://christine.website/blog/paranoid-nixos-2021-07-18/
 8. Commit and push
 9. Run `install-system <NEW_HOST>`
 
+---
+
+planned:
+
+- netboot into minmal config accessibele by root via ssh
+- deploy with deploy-rs
+- kepp up2date with polling from client via autoupdate service
+
 ## Things to consider when forking or copying stuff
 
 1. Change referenced ssh-keys in (grep for `cardno:13 338 635`):
@@ -49,7 +57,7 @@ Inspired by: https://christine.website/blog/paranoid-nixos-2021-07-18/
    > So you wont get locked out when losing a yubikey
    - luks: just enroll another yubikey with: `systemd-cryptenroll --fido2-device=auto <device>`
    - pam auth: add another yubikey to the `u2f_keys` file, `\n` seperated
-   - ssh auth: add another ssh publickey to the ` *.nix` files listed in step 1, also  `\n` seperated
+   - ssh auth: add another ssh publickey to the ` *.nix` files listed in step 1, also `\n` seperated
 
 ## Screenshots
 

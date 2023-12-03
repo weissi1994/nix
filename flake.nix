@@ -160,6 +160,7 @@
 
     deploy.nodes.test.profiles.system = {
         user = "root";
+        hostname = "test";
         path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.generic;
     };
 
