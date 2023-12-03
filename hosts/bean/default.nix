@@ -7,6 +7,7 @@
     inputs.nixos-hardware.nixosModules.common-pc
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ../_mixins/hardware/laptop.nix
+    ../_mixins/hardware/wwan.nix
     ../_mixins/hardware/systemd-boot.nix
     ../_mixins/services/pipewire.nix
   ];
