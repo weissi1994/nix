@@ -5,5 +5,5 @@
     ./disks.nix
     inputs.disko.nixosModules.disko 
     { disko.devices.disk.os.device = lib.mkForce "${os_disk}"; }
-  ]
+  ];
 }
