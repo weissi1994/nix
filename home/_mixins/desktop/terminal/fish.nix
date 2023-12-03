@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, hostname, pkgs, lib, ... }:
 {
   programs.fish = {
     enable = true;
@@ -128,7 +128,7 @@
         '';
       };
       sync-repos = "sync-dotfiles; sync-keystore";
-      upd = "cd ~/dev/nix; git pull; sudo nixos-rebuild switch --flake .#(hostname); cd -";
+      upd = "sudo nixos-rebuild switch --flake git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}";
 
       # Yubikey helper
       ykcode = "ykman --device 13338635  oath accounts code $argv";
