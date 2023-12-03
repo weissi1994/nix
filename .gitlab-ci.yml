@@ -39,23 +39,22 @@ build:
   artifacts:
     paths:
       - ./*.iso
-
-deploy:
-  stage: deploy
-  rules:
-    - if: "$CI_COMMIT_TAG"
-      when: on_success
-    - changes:
-        - flake.lock
-        - flake.nix
-        - .gitlab-ci.yml
-      when: on_success
-      allow_failure: true
-    - when: never
-  parallel:
-    matrix:
-      - HOST:
-          - terro
-          - bean
-  script:
-    - nix run github:nix-community/nixos-anywhere -- --flake ".#${HOST}" "root@${HOST}"
+# deploy:
+#   stage: deploy
+#   rules:
+#     - if: "$CI_COMMIT_TAG"
+#       when: on_success
+#     - changes:
+#         - flake.lock
+#         - flake.nix
+#         - .gitlab-ci.yml
+#       when: on_success
+#       allow_failure: true
+#     - when: never
+#   parallel:
+#     matrix:
+#       - HOST:
+#           - terro
+#           - bean
+#   script:
+#     - nix run github:nix-community/nixos-anywhere -- --flake ".#${HOST}" "root@${HOST}"
