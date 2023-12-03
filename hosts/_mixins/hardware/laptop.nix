@@ -12,11 +12,6 @@
   };
   systemd.services.ModemManager.enable = true;
 
-  programs.nm-applet = {
-    enable = true;
-    indicator = false;
-  };
-
   # Touchpad
   services = {
     xserver = {

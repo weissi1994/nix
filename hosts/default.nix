@@ -70,12 +70,12 @@
     defaultPackages = with pkgs; lib.mkForce [
       gitMinimal
       home-manager
-      micro
+      nixopsUnstable
+      vim
       rsync
     ];
     systemPackages = with pkgs; [
       neovim
-      vim
       pciutils
       psmisc
       unzip
