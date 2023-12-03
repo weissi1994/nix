@@ -6,10 +6,6 @@
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-pc
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-    (import ../_mixins/hardware/btrfs/disks.nix {
-      disks = ["/dev/disk/by-id/nvme-eui.5cd2e42a8140cf60"];
-      hostname = "${hostname}";
-    })
     ../_mixins/hardware/laptop.nix
     ../_mixins/hardware/systemd-boot.nix
     ../_mixins/services/pipewire.nix

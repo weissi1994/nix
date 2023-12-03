@@ -1,7 +1,6 @@
-{ config, desktop, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, ... }:
+{ config, desktop, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, ... }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
     (modulesPath + "/installer/scan/not-detected.nix")
     ./${hostname}
     ./_mixins/console
@@ -13,6 +12,7 @@
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
   ++ lib.optional (hostname != "installer") ./_mixins/services/openssh.nix
   ++ lib.optional (hostname != "installer") ./_mixins/virt
+  ++ lib.optional (os_disk != null) ./_mixins/hardware/btrfs/os.nix
   ++ lib.optional (desktop != null) ./_mixins/desktop;
 
   services.opensnitch.enable = true;
@@ -70,7 +70,7 @@
     defaultPackages = with pkgs; lib.mkForce [
       gitMinimal
       home-manager
-      nixopsUnstable
+      nixos-anywhere
       vim
       rsync
     ];

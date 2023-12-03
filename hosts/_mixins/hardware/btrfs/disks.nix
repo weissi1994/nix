@@ -1,4 +1,4 @@
-{ disks ? [ "/dev/vda" ], hostname ? "nixos", ... }:
+{ hostname ? "nixos", ... }:
 let
   defaultFsOpts = [ "compress=zstd" "noatime" ]; # "noexec" ];
 in
@@ -7,7 +7,7 @@ in
     disk = {
       os = {
         type = "disk";
-        device = builtins.elemAt disks 0;
+        device = "/dev/vda";
         content = {
           type = "table";
           format = "gpt";

@@ -35,11 +35,6 @@
     nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     utils.url   = "github:numtide/flake-utils";
@@ -55,15 +50,9 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, nixos-generators, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, ... }@inputs:
   let
     inherit (self) outputs;
-      
-    # NixOps (Servers)
-    domain = "n0de.biz";
-    pkgsFor = system: import nixpkgs {
-      inherit system;
-    };
 
     # NixOs (Workstation)
     mkHome = { hostname, username, desktop ? null, platform ? "x86_64-linux" }: inputs.home-manager.lib.homeManagerConfiguration {
@@ -75,13 +64,12 @@
     };
 
     # Helper function for generating host configs
-    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, }: inputs.nixpkgs.lib.nixosSystem {
+    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit self inputs outputs desktop offline_installer hostname platform username stateVersion;
+        inherit self inputs outputs desktop offline_installer hostname platform username os_disk stateVersion;
       };
       modules = [
         ./hosts
-        self.nixosModules.generator
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
@@ -136,35 +124,6 @@
       in import ./pkgs { inherit pkgs; }
     );
 
-
-    nixosModules.generator = {config, ...}: {
-      imports = [
-        nixos-generators.nixosModules.all-formats
-      ];
-
-      nixpkgs.hostPlatform = "x86_64-linux";
-
-      formatConfigs.vm = {config, modulesPath, ...}: {
-        virtualisation.memorySize = 4096;
-        imports = [ "${toString modulesPath}/virtualisation/qemu-vm.nix" ];
-        #virtualisation.qemu.options = ["-vga none" "-device virtio-vga-gl" "-display gtk,gl=on"];
-        hardware.opengl.enable = true;
-        hardware.opengl.driSupport = true;
-        hardware.opengl.driSupport32Bit = true;
-        virtualisation.qemu.options = ["-vga none" "-device virtio-gpu-pci"];
-      };
-
-      # define a new format
-      formatConfigs.my-custom-format = {config, modulesPath, ...}: {
-        imports = ["${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"];
-        formatAttr = "isoImage";
-        fileExtension = ".iso";
-        networking.wireless.networks = {
-          # ...
-        };
-      };
-    };
-
     homeConfigurations = {
       # Only homemanager (for non-nixos systems)
       #  - home-manager switch -b backup --flake .#ion@terro
@@ -175,10 +134,10 @@
       # Workstations
       #  - sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
       #  - sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
-      terro   = mkHost { hostname = "terro"; username = "ion"; desktop = "sway"; hm = true; };
-      bean    = mkHost { hostname = "bean";  username = "ion"; desktop = "sway"; hm = true; };
+      terro   = mkHost { hostname = "terro"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/wwn-0x5002538e4084d7cc"; };
+      bean    = mkHost { hostname = "bean";  username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/nvme-eui.5cd2e42a8140cf60"; };
       # Copy this line for new hosts
-      generic = mkHost { hostname = "generic"; username = "ion"; desktop = "sway"; hm = true; };
+      generic = mkHost { hostname = "generic"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/vda"; };
       # ISOs (for initial installation and testing)
       #  - nix build .#nixosConfigurations.iso.config.formats.iso
       #  - nix build .#nixosConfigurations.iso.config.formats.install-iso
@@ -191,22 +150,12 @@
       #  to bundle a pre-compiled system into the iso
       installer-sway     = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "sway"; };
       installer-pantheon = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "pantheon"; };
-    };
 
-    # NixOps
-    nixopsConfigurations.default = {
-      inherit self inputs nixpkgs outputs stateVersion;
-      network.storage.legacy.databasefile = "~/.nixops/deployments.nixops";
-      network.description = "NixOps config for ${domain}";
-      network.enableRollback = true;
-      # defaults.nixpkgs.pkgs = pkgsFor "x86_64-linux";
-      # defaults._module.args = {
-      #   inherit self inputs nixpkgs domain outputs stateVersion;
-      # };
-      
-      # List managed machines here
-      plow = import ./servers/pxe.nix;
-      #rock = import ./servers/hetzner.nix;
+      # NixOs Servers managed by this flake 
+      # TODO: define mkServer which takes roles, like pxe webserver etc
+      # Disk config and co via hostname
+      # plow = import ./servers/pxe.nix;
+      # rock = import ./servers/hetzner.nix;
     };
   };
 }

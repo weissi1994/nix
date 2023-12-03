@@ -7,10 +7,6 @@
     # inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     inputs.nixos-hardware.nixosModules.common-pc
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-    (import ../_mixins/hardware/btrfs/disks.nix {
-      disks = ["/dev/disk/by-id/CHANGE_ME"];
-      hostname = "${hostname}";
-    })
     # ../_mixins/hardware/gpu.nix
     # ../_mixins/hardware/laptop.nix
     ../_mixins/hardware/systemd-boot.nix
