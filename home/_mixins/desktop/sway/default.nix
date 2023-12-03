@@ -497,8 +497,9 @@ trough {
         size = 12.0;
       };
       input = {
-        "*" = {
-          xkb_layout = lib.mkDefault "en";
+        "type:keyboard" = {
+          xkb_layout = lib.mkDefault "us";
+          xkb_variant = lib.mkDefault "altgr-intl";
         };
       };
       menu = menu;
