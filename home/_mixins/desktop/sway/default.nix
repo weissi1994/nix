@@ -687,5 +687,9 @@ trough {
       name = "Catppuccin-Mocha-Compact-Blue-Dark";
       package = pkgs.catppuccin-gtk;
     };
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "adwaita-icon-theme";
+    };
   };
 }
