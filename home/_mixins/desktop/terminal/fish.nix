@@ -128,7 +128,7 @@
         '';
       };
       sync-repos = "sync-dotfiles; sync-keystore";
-      upd = "sudo nixos-rebuild switch --flake git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}";
+      upd = "sudo nixos-rebuild switch --flake \"git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}\"";
 
       # Yubikey helper
       ykcode = "ykman --device 13338635  oath accounts code $argv";
