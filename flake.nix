@@ -41,6 +41,8 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    utils.url   = "github:numtide/flake-utils";
   };
 
   # `outputs` are all the build result of the flake.
@@ -56,7 +58,14 @@
   outputs = { self, nixpkgs, nix-formatter-pack, home-manager, nixos-generators, ... }@inputs:
   let
     inherit (self) outputs;
+      
+    # NixOps (Servers)
+    domain = "n0de.biz";
+    pkgsFor = system: import nixpkgs {
+      inherit system;
+    };
 
+    # NixOs (Workstation)
     mkHome = { hostname, username, desktop ? null, platform ? "x86_64-linux" }: inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
       extraSpecialArgs = {
@@ -182,6 +191,22 @@
       #  to bundle a pre-compiled system into the iso
       installer-sway     = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "sway"; };
       installer-pantheon = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "pantheon"; };
+    };
+
+    # NixOps
+    nixopsConfigurations.default = {
+      inherit self inputs nixpkgs outputs stateVersion;
+      network.storage.legacy.databasefile = "~/.nixops/deployments.nixops";
+      network.description = "NixOps config for ${domain}";
+      network.enableRollback = true;
+      # defaults.nixpkgs.pkgs = pkgsFor "x86_64-linux";
+      # defaults._module.args = {
+      #   inherit self inputs nixpkgs domain outputs stateVersion;
+      # };
+      
+      # List managed machines here
+      plow = import ./servers/pxe.nix;
+      #rock = import ./servers/hetzner.nix;
     };
   };
 }
