@@ -55,6 +55,14 @@
         PubkeyAuthentication no
         HostName 192.168.1.101
 
+      Host bean
+        User ion
+        Port 22
+        HostKeyAlgorithms +ssh-rsa
+        PreferredAuthentications password
+        PubkeyAuthentication no
+        HostName 192.168.1.107
+
       Host homeassistant
         User hassio
         Port 22
