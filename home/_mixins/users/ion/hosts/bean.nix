@@ -1,13 +1,11 @@
 { config, pkgs, fetchurl, ... }:
 {
+  services.network-manager-applet.enable = true;
+  services.blueman-applet.enable = true;
+
   home.file.".config/Yubico/u2f_keys".source = ./u2f_keys.bean;
   wayland.windowManager.sway = {
     config = {
-      input = {
-        "*" = {
-          xkb_layout = "us";
-        };
-      };
       output = {
         eDP-1 = {
           resolution = "1920x1080";

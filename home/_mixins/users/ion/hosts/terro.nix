@@ -4,15 +4,6 @@
 
   wayland.windowManager.sway = {
     config = {
-      input = {
-        "*" = {
-          xkb_layout = "us";
-          #xkb_layout = "de";
-          #xkb_variant = "nodeadkeys";
-          #xkb_options = "grp:alt_shift_toggle";
-          #xkb_numlock = "enable";
-        };
-      };
       output = {
         DP-1 = {
           resolution = "2560x1440";
