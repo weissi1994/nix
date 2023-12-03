@@ -182,9 +182,9 @@ in
         "custom/screenshot" = {
           format = " ";
           tooltip-format = "Take a screenshot";
-          on-click = "sh $HOME/.config/sway/screenshot.sh region";
-          on-middle-click = "sh $HOME/.config/sway/screenshot.sh window";
-          on-right-click = "sh $HOME/.config/sway/screenshot.sh screen";
+          on-click = "sh $HOME/.config/sway/screenshot.sh area";
+          on-click-middle = "sh $HOME/.config/sway/screenshot.sh window";
+          on-click-right = "sh $HOME/.config/sway/screenshot.sh screen";
         };
         "custom/color-picker" = {
           format = "  ";
