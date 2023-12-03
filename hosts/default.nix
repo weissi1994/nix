@@ -70,7 +70,7 @@
     defaultPackages = with pkgs; lib.mkForce [
       gitMinimal
       home-manager
-      nixos-anywhere
+      deploy-rs
       vim
       rsync
     ];
