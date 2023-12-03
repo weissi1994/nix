@@ -128,8 +128,8 @@
         '';
       };
       sync-repos = "sync-dotfiles; sync-keystore";
-      upd = "nix flake prefetch \"git+https://gitlab.n0de.biz/daniel/nix?ref=main\"; sudo nixos-rebuild switch --flake \"git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}\" --upgrade";
-      deploy = "nix flake prefetch \"git+https://gitlab.n0de.biz/daniel/nix?ref=main\"; nixos-rebuild switch --flake \"git+https://gitlab.n0de.biz/daniel/nix?ref=main#$argv[1]\" --target-host \"ion@$argv[1]\" --use-remote-sudo --upgrade";
+      upd = "nix flake prefetch \"git+https://gitlab.n0de.biz/daniel/nix?ref=main\" --refresh; sudo nixos-rebuild switch --flake \"git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}\" --upgrade";
+      deploy = "nix flake prefetch \"git+https://gitlab.n0de.biz/daniel/nix?ref=main\" --refresh; nixos-rebuild switch --flake \"git+https://gitlab.n0de.biz/daniel/nix?ref=main#$argv[1]\" --target-host \"ion@$argv[1]\" --use-remote-sudo --upgrade";
 
       # Yubikey helper
       ykcode = "ykman --device 13338635  oath accounts code $argv";
