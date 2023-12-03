@@ -688,6 +688,6 @@ trough {
       name = "Catppuccin-Mocha-Compact-Blue-Dark";
       package = pkgs.catppuccin-gtk;
     };
-    iconTheme = { package = pkgs.hicolor_icon_theme; name = "hicolor"; };
+    iconTheme = { package = pkgs.vimix-icon-theme; name = "vimix"; };
   };
 }
