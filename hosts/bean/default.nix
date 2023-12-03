@@ -17,18 +17,6 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # netkit.xmm7360 = {
-  #   enable = true;
-  #   autoStart = true;
-  #   config = {
-  #     apn = "internet.t-mobile.at"; #your APN here
-  #     nodefaultroute = false; # Setup default route so laptop uses 4G LTE when Wi-Fi is unavailable
-  #     noresolv = true; # Don't contaminate my DNS config
-  #     dbus = true;
-  #   };
-  #   package = pkgs.netkit.xmm7360-pci_latest;
-  # };
-
   boot.kernelParams = [ "quiet" "udev.log_level=0" ];
   boot.plymouth.enable = true;
   boot.plymouth.theme = "bgrt";
@@ -37,9 +25,6 @@
   boot.consoleLogLevel = 0;
 
   hardware.enableRedistributableFirmware = true;
-  systemd.services.ModemManager.enable = true;
-  hardware.usbWwan.enable=true;
-  services.udev.packages = with pkgs; [ usb-modeswitch-data ];
 
   # Update Intel CPU Microcode
   hardware.cpu.intel.updateMicrocode = true;
