@@ -201,11 +201,8 @@ in
     ];
     style = ''
       * {
-        border: none;
-        border-radius: 0;
         font-family: "${font} Medium";
         font-size: 13px;
-        min-height: 0;
         background-color: ${colorScheme.background};
         color: ${colorScheme.foreground}
       }

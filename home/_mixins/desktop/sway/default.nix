@@ -665,6 +665,7 @@ trough {
     foot
     waybar
     pkgs.unstable.obsidian
+    networkmanagerapplet
     dmenu-wayland
     ulauncher
     nwg-launchers
@@ -688,6 +689,6 @@ trough {
       name = "Catppuccin-Mocha-Compact-Blue-Dark";
       package = pkgs.catppuccin-gtk;
     };
-    iconTheme = { package = pkgs.vimix-icon-theme; name = "vimix"; };
+    iconTheme = { package = pkgs.gnome3.adwaita-icon-theme; name = "adwaita"; };
   };
 }
