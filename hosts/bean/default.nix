@@ -37,6 +37,9 @@
   boot.consoleLogLevel = 0;
 
   hardware.enableRedistributableFirmware = true;
+  systemd.services.ModemManager.enable = true;
+  hardware.usbWwan.enable=true;
+  services.udev.packages = with pkgs; [ usb-modeswitch-data ];
 
   # Update Intel CPU Microcode
   hardware.cpu.intel.updateMicrocode = true;
