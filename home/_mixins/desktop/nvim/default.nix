@@ -7,6 +7,7 @@
     nodePackages_latest.markdownlint-cli # Markdown linter
     marksman # Markdown formatter
     gnumake # for compiling c
+    stylua # lua formatter
   ];
 
   home.file.".config/nvim" = {
