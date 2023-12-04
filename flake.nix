@@ -36,8 +36,6 @@
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   # `outputs` are all the build result of the flake.
@@ -50,7 +48,7 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, deploy-rs, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, ... }@inputs:
   let
     inherit (self) outputs;
 
@@ -157,13 +155,5 @@
       # plow = import ./servers/pxe.nix;
       # rock = import ./servers/hetzner.nix;
     };
-
-    deploy.nodes.test.profiles.system = {
-        user = "root";
-        hostname = "test";
-        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.generic;
-    };
-
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
 }

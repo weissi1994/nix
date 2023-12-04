@@ -8,5 +8,6 @@
     dog
     nmap
     ipcalc
+    certigo
   ];
 }
