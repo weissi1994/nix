@@ -62,13 +62,14 @@
     };
 
     # Helper function for generating host configs
-    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, }: inputs.nixpkgs.lib.nixosSystem {
+    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, os_layout ? "btrfs", data_disks ? [], data_layout ? "btrfs", roles ? [] }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit self inputs outputs desktop offline_installer hostname platform username os_disk stateVersion;
+        inherit self inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout stateVersion;
       };
       modules = [
         ./hosts
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
+        ++ (inputs.nixpkgs.lib.optionals (roles != []) roles)
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {
@@ -135,7 +136,7 @@
       terro   = mkHost { hostname = "terro"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/wwn-0x5002538e4084d7cc"; };
       bean    = mkHost { hostname = "bean";  username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/nvme-eui.5cd2e42a8140cf60"; };
       # Copy this line for new hosts
-      generic = mkHost { hostname = "generic"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/vda"; };
+      generic = mkHost { hostname = "generic"; username = "ion"; hm = true; os_disk = "/dev/vda"; };
       # ISOs (for initial installation and testing)
       #  - nix build .#nixosConfigurations.iso.config.formats.iso
       #  - nix build .#nixosConfigurations.iso.config.formats.install-iso
@@ -154,6 +155,15 @@
       # Disk config and co via hostname
       # plow = import ./servers/pxe.nix;
       # rock = import ./servers/hetzner.nix;
+      xeus = mkHost {
+        hostname = "xeus";
+        username = "ion";
+        hm = true;
+        os_disk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAG526571M";
+        roles = [
+          ./servers/pxe.nix
+        ];
+      };
     };
   };
 }
