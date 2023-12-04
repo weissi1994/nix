@@ -9,5 +9,6 @@
     nmap
     ipcalc
     certigo
+    dhcpdump
   ];
 }
