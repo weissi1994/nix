@@ -2579,7 +2579,6 @@ print_info="
 	OS
 	KERNEL
 	CPU
-  PUPPET
 	NAMELOGGED
 	SHELL
 	DATE
