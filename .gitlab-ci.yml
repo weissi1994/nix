@@ -35,7 +35,7 @@ iso:
   script:
     - export ARTIFACT_NAME="${CI_PROJECT_NAME}-${HOST}-${CI_COMMIT_REF_SLUG}.iso"
     - nix --accept-flake-config build ".#nixosConfigurations.$HOST.config.system.build.isoImage"
-    - cp -L result $ARTIFACT_NAME
+    - cp -L ./result/iso/*.iso $ARTIFACT_NAME
   artifacts:
     paths:
       - ./*.iso
