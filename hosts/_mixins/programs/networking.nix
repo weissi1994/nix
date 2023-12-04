@@ -7,5 +7,6 @@
     termshark
     dog
     nmap
+    ipcalc
   ];
 }

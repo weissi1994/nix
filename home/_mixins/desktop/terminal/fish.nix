@@ -90,6 +90,9 @@
       gwC = "git clean -f";
       gwx = "git rm -r";
       gwX = "git rm -rf";
+
+      wgup = "wg-quick up ~/.config/wireguard/wg-home.conf";
+      wgdown = "wg-quick down ~/.config/wireguard/wg-home.conf";
     };
     functions = {
       # Note taking

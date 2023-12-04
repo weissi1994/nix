@@ -10,6 +10,7 @@
     ../_mixins/hardware/wwan.nix
     ../_mixins/hardware/systemd-boot.nix
     ../_mixins/services/pipewire.nix
+    ../_mixins/services/wireguard.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
