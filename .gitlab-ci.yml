@@ -1,6 +1,7 @@
 stages:
   - check
   - build
+  - deploy
 
 default:
   tags:
