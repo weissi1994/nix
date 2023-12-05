@@ -130,7 +130,6 @@ in
     ]
     ++ ifExists [
       "docker"
-      "lxd"
       "podman"
     ];
     homeMode = "0755";
