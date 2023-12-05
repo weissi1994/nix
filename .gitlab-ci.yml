@@ -64,7 +64,7 @@ netboot:
     - cp -L ./result/bzImage /srv/netboot/assets/nixos/$HOST/
     - nix build .#nixosConfigurations.installer-pantheon.config.system.build.toplevel
     - INIT="$(readlink -f ./result)/init"
-    - cat ./netboot.ipxe | envsusbt > /srv/netboot/assets/nixos/$HOST/netboot.ipxe
+    - cat ./netboot.ipxe | envsubst > /srv/netboot/assets/nixos/$HOST/netboot.ipxe
 
 deploy:
   stage: deploy
