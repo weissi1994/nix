@@ -1,4 +1,4 @@
 #!ipxe
-kernel https://github.com/netbootxyz/asset-mirror/releases/download/124244129-bd20f138/bzImage init=/nix/store/1s2k54l716rl0vnjz3qjqhjy8gisqvsx-nixos-system-nixos-20.03.2625.9ea61f7bc44/init initrd=initrd loglevel=4
-initrd https://github.com/netbootxyz/asset-mirror/releases/download/124244129-bd20f138/initrd
+kernel https://boot.n0de.biz/nixos/$HOST/bzImage init=$INIT initrd=initrd loglevel=4
+initrd https://boot.n0de.biz/nixos/$HOST/initrd
 boot
