@@ -36,6 +36,8 @@
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    arion.url = "github:hercules-ci/arion";
   };
 
   # `outputs` are all the build result of the flake.
@@ -48,7 +50,7 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, arion, ... }@inputs:
   let
     inherit (self) outputs;
 
@@ -64,12 +66,12 @@
     # Helper function for generating host configs
     mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, os_layout ? "btrfs", data_disks ? [], data_layout ? "btrfs", roles ? [] }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit self inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout stateVersion;
+        inherit self inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout roles stateVersion;
       };
       modules = [
         ./hosts
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
-        ++ (inputs.nixpkgs.lib.optionals (roles != []) roles)
+        ++ (inputs.nixpkgs.lib.optionals (roles != []) [ arion.nixosModules.arion ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {
@@ -161,7 +163,7 @@
         hm = true;
         os_disk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAG526571M";
         roles = [
-          ./servers/pxe.nix
+          ./hosts/_mixins/server/roles/webserver.nix
         ];
       };
     };
