@@ -59,8 +59,10 @@ netboot:
           - installer-pantheon
   script:
     - nix build .#nixosConfigurations.$HOST.config.system.build.initialRamdisk
+    - rm -f /srv/netboot/assets/nixos/$HOST/initrd || true
     - cp -L ./result/initrd /srv/netboot/assets/nixos/$HOST/
     - nix build .#nixosConfigurations.$HOST.config.system.build.kernel
+    - rm -f /srv/netboot/assets/nixos/$HOST/bzImage || true
     - cp -L ./result/bzImage /srv/netboot/assets/nixos/$HOST/
     - nix build .#nixosConfigurations.installer-pantheon.config.system.build.toplevel
     - INIT="$(readlink -f ./result)/init"
