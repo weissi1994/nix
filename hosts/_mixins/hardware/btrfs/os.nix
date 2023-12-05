@@ -7,10 +7,11 @@
     { disko.devices.disk.os.device = lib.mkForce "${os_disk}"; }
   ];
 
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir /mnt
-    mount -t btrfs /dev/mapper/enc /mnt
-    btrfs subvolume delete /mnt/root
-    btrfs subvolume snapshot /mnt/root-blank /mnt/root
-  '';
+  # TODO: convert to systemd unit https://github.com/NixOS/nixpkgs/blob/nixos-23.11/nixos/modules/system/boot/systemd/initrd.nix
+  # boot.initrd.postDeviceCommands = lib.mkAfter ''
+  #   mkdir /mnt
+  #   mount -t btrfs /dev/mapper/enc /mnt
+  #   btrfs subvolume delete /mnt/root
+  #   btrfs subvolume snapshot /mnt/root-blank /mnt/root
+  # '';
 }

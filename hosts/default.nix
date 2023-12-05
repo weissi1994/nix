@@ -1,4 +1,4 @@
-{ config, desktop, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, os_layout, data_disks, data_layout, ... }:
+{ config, desktop, roles, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, os_layout, data_disks, data_layout, ... }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -14,7 +14,7 @@
   ++ lib.optional (hostname != "installer") ./_mixins/virt
   ++ lib.optional (os_disk != null) ./_mixins/hardware/${os_layout}/os.nix
   ++ lib.optional (data_disks != []) ./_mixins/hardware/${data_layout}/data.nix
-  ++ lib.optional (desktop == null) ./_mixins/server
+  ++ lib.optional (roles != []) ./_mixins/server
   ++ lib.optional (desktop != null) ./_mixins/desktop;
 
   services.opensnitch.enable = true;
