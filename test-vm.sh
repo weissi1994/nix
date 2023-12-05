@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/run/current-system/sw/bin/bash
 
-HOST=${1:-Please set host}
+HOST=${1:?Please set host}
 
 nix build .#nixosConfigurations.$HOST.config.system.build.vm
 
