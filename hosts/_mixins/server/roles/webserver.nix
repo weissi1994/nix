@@ -1,6 +1,11 @@
 { inputs, ... }: {
   virtualisation.oci-containers.containers.www = {
     image = "registry.n0de.biz/daniel/derzer:master";
+    login = {
+      registry = "registry.n0de.biz";
+      username = "deploy";
+      passwordFile = "/run/secrets/docker/registry/n0de";
+    };
     hostname = "www";
     labels = {
       "traefik.enable" = "true";
