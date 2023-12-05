@@ -61,8 +61,10 @@ netboot:
           - installer-sway
           - installer-pantheon
   script:
-    - export ARTIFACT_NAME="${CI_PROJECT_NAME}-${HOST}-${CI_COMMIT_REF_SLUG}.iso"
-    - 7z x "${ARTIFACT_NAME}" -o/srv/netboot/assets/nixos/$HOST/
+    - nix build .#nixosConfigurations.$HOST.config.system.build.initialRamdisk
+    - cp -L ./result/initrd /srv/netboot/assets/nixos/$HOST/
+    - nix build .#nixosConfigurations.$HOST.config.system.build.kernel
+    - cp -L ./result/bzImage /srv/netboot/assets/nixos/$HOST/
 
 deploy:
   stage: deploy
