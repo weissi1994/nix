@@ -36,8 +36,6 @@
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    arion.url = "github:hercules-ci/arion";
   };
 
   # `outputs` are all the build result of the flake.
@@ -50,7 +48,7 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, arion, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, ... }@inputs:
   let
     inherit (self) outputs;
 
@@ -71,7 +69,6 @@
       modules = [
         ./hosts
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
-        ++ (inputs.nixpkgs.lib.optionals (roles != []) [ arion.nixosModules.arion ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {

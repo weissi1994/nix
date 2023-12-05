@@ -1,8 +1,7 @@
 { inputs, ... }: {
-  services."www".service = {
+  virtualisation.oci-containers.containers.www = {
     image = "registry.n0de.biz/daniel/derzer:master";
-    restart = "unless-stopped";
-    container_name = "www";
+    hostname = "www";
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.www.rule" = "HostRegexp(`{subdomain:.*}.n0de.biz`, `n0de.biz`, `www.n0de.biz`)";
