@@ -158,7 +158,7 @@
       xeus = mkHost {
         hostname = "xeus";
         username = "ion";
-        hm = true;
+        hm = false;
         os_disk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAG526571M";
         roles = [
           ./servers/pxe.nix

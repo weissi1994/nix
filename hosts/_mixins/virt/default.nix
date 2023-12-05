@@ -15,6 +15,7 @@
   virtualisation = {
     lxd = {
       enable = true;
+      recommendedSysctlSettings = true;
     };
     podman = {
       defaultNetwork.settings = {

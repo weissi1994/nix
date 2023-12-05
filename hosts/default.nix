@@ -60,11 +60,11 @@
   time.timeZone = "ETC/UTC";
 
   # Only install the docs I use
-  documentation.enable = true;
-  documentation.nixos.enable = false;
+  documentation.enable = lib.mkDefault true;
+  documentation.nixos.enable = lib.mkDefault false;
   documentation.man.enable = true;
-  documentation.info.enable = false;
-  documentation.doc.enable = false;
+  documentation.info.enable = lib.mkDefault false;
+  documentation.doc.enable = lib.mkDefault false;
 
   environment = {
     # Eject nano and perl from the system

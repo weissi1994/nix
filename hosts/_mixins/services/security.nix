@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, username, lib, ... }:
 {
   programs.ssh.startAgent = false;
   services.pcscd.enable = true;
@@ -17,7 +17,7 @@
   };
 
   security.auditd.enable = true;
-  security.audit.enable = true;
+  security.audit.enable = lib.mkDefault true;
   security.audit.rules = [
     "-a exit,always -F arch=b64 -S execve"
   ];
