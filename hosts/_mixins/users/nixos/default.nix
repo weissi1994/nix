@@ -98,6 +98,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     sudo ./result
   fi
 
+  # TODO: if os_layout == btrfs
+  btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+
   sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
 
   echo "Disk $TARGET_DISK formatted."

@@ -15,6 +15,11 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Quiet boot with splash screen
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+
   boot.blacklistedKernelModules = [ "ucsi_ccg" ];
   boot.kernelParams = [ "quiet" "udev.log_level=0" ];
   boot.plymouth.enable = true;
