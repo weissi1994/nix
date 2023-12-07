@@ -1,3 +1,8 @@
+# ╭─  Micro-Star International Co., Ltd B450 GAMING PLUS MAX (MS-7B86) 
+# ├─  AMD Ryzen 9 3900X (24)
+# ├─  64GB - 4x 16GB @ 3600 MT/s
+# ├─  NVIDIA GeForce RTX 2070 SUPER 
+# ╰─  2560x1440, 2560x1440, 2560x1440
 { config, inputs, lib, pkgs, platform, hostname, modulesPath, ... }:
 {
   imports = [
