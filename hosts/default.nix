@@ -8,6 +8,7 @@
     ./_mixins/services/smartmon.nix
     ./_mixins/services/security.nix
     ./_mixins/services/autoupdate.nix
+    ./_mixins/programs/hardware.nix
   ]
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
   ++ lib.optional (hostname != "installer") ./_mixins/services/openssh.nix
