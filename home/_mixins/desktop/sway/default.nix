@@ -447,6 +447,7 @@ trough {
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
       export GDK_BACKEND=wayland
       export XDG_CURRENT_DESKTOP=sway
+      export WLR_RENDERER=vulkan
       export GBM_BACKEND=nvidia-drm
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
       export MOZ_ENABLE_WAYLAND=1

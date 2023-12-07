@@ -5,6 +5,9 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      vulkan-validation-layers 
+    ];
   };
 
   # Load nvidia driver for Xorg and Wayland
