@@ -7,6 +7,7 @@
     driSupport32Bit = true;
     extraPackages = with pkgs; [
       vulkan-validation-layers 
+      libvdpau-va-gl
     ];
   };
 
@@ -14,6 +15,11 @@
   services.xserver.videoDrivers = [ "nvidia" "nouveau" ];
   # services.xserver.videoDrivers = ["nvidia"];
   # boot.kernelParams = ["nvidia_drm.fbdev=1"];
+
+
+  # environment.variables.VDPAU_DRIVER = "va_gl";
+  # environment.variables.LIBVA_DRIVER_NAME = "nvidia";
+
   programs.sway.extraOptions = ["--unsupported-gpu"];
 
   # Force wayland when possible 
@@ -26,8 +32,8 @@
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; 
 
   # electron apps
-  environment.sessionVariables.GBM_BACKEND = "nvidia-drm";
-  environment.sessionVariables.__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  # environment.sessionVariables.GBM_BACKEND = "nvidia-drm";
+  # environment.sessionVariables.__GLX_VENDOR_LIBRARY_NAME = "nvidia";
 
   hardware.nvidia = {
 
