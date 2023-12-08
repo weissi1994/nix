@@ -36,6 +36,8 @@
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   # `outputs` are all the build result of the flake.
@@ -48,7 +50,7 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, sops-nix, ... }@inputs:
   let
     inherit (self) outputs;
 
@@ -62,13 +64,14 @@
     };
 
     # Helper function for generating host configs
-    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, os_layout ? "btrfs", data_disks ? [], data_layout ? "btrfs", roles ? [] }: inputs.nixpkgs.lib.nixosSystem {
+    mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, os_layout ? "btrfs", data_disks ? [], data_layout ? "mdraid", roles ? [] }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit self inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout roles stateVersion;
       };
       modules = [
         ./hosts
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
+        ++ (inputs.nixpkgs.lib.optionals (roles != []) [ sops-nix.nixosModules.sops ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {
@@ -150,17 +153,33 @@
       installer-pantheon = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "pantheon"; };
 
       # NixOs Servers managed by this flake 
-      # TODO: define mkServer which takes roles, like pxe webserver etc
-      # Disk config and co via hostname
-      # plow = import ./servers/pxe.nix;
-      # rock = import ./servers/hetzner.nix;
       xeus = mkHost {
         hostname = "xeus";
         username = "ion";
         hm = true;
+        os_layout = "bcachefs";
         os_disk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAG526571M";
+        # Cant define disko.devicestwice
+        # data_layout = "mdraid";
+        # data_disks = [
+        #   "/dev/disk/by-id/ata-ST8000VN004-2M2101_WSD5EVSJ"
+        #   "/dev/disk/by-id/ata-ST8000VN004-2M2101_WSD5720S"
+        # ];
         roles = [
+          ./hosts/_mixins/server/roles/kuma.nix
+          ./hosts/_mixins/server/roles/mail.nix
+          ./hosts/_mixins/server/roles/gitlab.nix
+          ./hosts/_mixins/server/roles/codimd.nix
+          ./hosts/_mixins/server/roles/crafty.nix
+          ./hosts/_mixins/server/roles/immich.nix
+          ./hosts/_mixins/server/roles/netboot.nix
+          ./hosts/_mixins/server/roles/valheim.nix
+          ./hosts/_mixins/server/roles/webhook.nix
+          ./hosts/_mixins/server/roles/4scanner.nix
+          ./hosts/_mixins/server/roles/nextcloud.nix
           ./hosts/_mixins/server/roles/webserver.nix
+          ./hosts/_mixins/server/roles/hoppscotch.nix
+          ./hosts/_mixins/server/roles/homeassistant.nix
         ];
       };
     };

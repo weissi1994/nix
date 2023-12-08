@@ -2,8 +2,6 @@
 
 > Only intended for desktop usage
 
-Inspired by: https://christine.website/blog/paranoid-nixos-2021-07-18/
-
 **Desktop:** [sway](https://github.com/swaywm/sway)  
 **Terminal:** [kitty](https://github.com/kovidgoyal/kitty)  
 **Shell:** [fish](https://github.com/fish-shell/fish-shell)  
@@ -62,3 +60,7 @@ planned:
 ## Screenshots
 
 ![Main screen](screenshots/screen.png)
+
+**Inspired by:**
+
+- https://christine.website/blog/paranoid-nixos-2021-07-18/

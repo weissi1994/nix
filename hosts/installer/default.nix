@@ -8,6 +8,10 @@
     ../_mixins/services/pipewire.nix
   ];
 
+  boot.supportedFilesystems = lib.mkForce [ "btrfs" "bcachefs" "cifs" "f2fs" "jfs" "ntfs" "reiserfs" "vfat" "xfs" ];
+  boot.kernelPackages = pkgs.linuxPackages_testing;
+  services.openssh.settings.PermitRootLogin = "yes";
+
   swapDevices = [{
     device = "/swap";
     size = 1024;

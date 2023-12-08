@@ -86,17 +86,9 @@ read -p "Are you sure? [y/N]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   sudo true
-  TARGET_DISK=$(cat "hosts/$TARGET_HOST/default.nix" | grep -oP '    disks = \["\K[/a-zA-Z0-9-.]+' | grep -v 'CHANGE')
 
-  if [[ -z "$TARGET_DISK" ]]; then
-    sudo lsblk -o NAME,MODEL,SIZE,SERIAL,VENDOR,WWN
-    read -p "Specify disk to format (absolute path; preferable using WWN): " TARGET_DISK
-    sudo sed -i "s/CHANGE_ME/$TARGET_DISK/" "hosts/$TARGET_HOST/default.nix"
-    sudo nix run github:nix-community/disko -- --mode zap_create_mount --flake .#generic
-  else
-    sudo nix build .#nixosConfigurations.$TARGET_HOST.config.system.build.diskoScript
-    sudo ./result
-  fi
+  sudo nix build .#nixosConfigurations.$TARGET_HOST.config.system.build.diskoScript
+  sudo ./result
 
   # TODO: if os_layout == btrfs
   btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
@@ -105,11 +97,15 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
   echo "Disk $TARGET_DISK formatted."
   echo "Installation completed."
+
+  # TODO: if os_layout == btrfs
   echo
   echo "Do you want to add fido2 encryption to luks?"
   read -p "If so plug in your yubikey! [y/N]" -n 1 -r
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo lsblk -o NAME,MODEL,SIZE,SERIAL,VENDOR,WWN
+    read -p "Specify disk to format (absolute path; preferable using WWN): " TARGET_DISK
     sudo systemd-cryptenroll --fido2-device=auto "$TARGET_DISK-part2"
   fi
 fi

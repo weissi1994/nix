@@ -1,5 +1,31 @@
-{ inputs, roles, ... }: {
+{ inputs, config, roles, hostname, pkgs, ... }: {
   imports = roles;
+
+  sops.defaultSopsFile = ../../../secrets/${hostname}_sec.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+  users.users.cloudflared = {
+    group = "cloudflared";
+    isSystemUser = true;
+  };
+  users.groups.cloudflared = { };
+
+  sops.secrets.cloudflared_token = { };
+  sops.secrets.cloudflared_token.owner = config.users.users.cloudflared.name;
+  sops.secrets.cloudflared_token.group = config.users.users.cloudflared.group;
+
+  sops.secrets.traefik_env = { };
+
+  systemd.services.cloudflared = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" "systemd-resolved.service" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --credentials-file ${config.sops.secrets.cloudflared_token.path} Home";
+      Restart = "always";
+      User = "cloudflared";
+      Group = "cloudflared";
+    };
+  };
 
   virtualisation.oci-containers = {
     backend = "podman";
@@ -35,7 +61,7 @@
           "--certificatesresolvers.myresolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
         ];
         ports = [ "80:80" "443:443" "8080:8080" ];
-        environmentFiles = [ "/run/secrets/docker/traefik" ];
+        environmentFiles = [ config.sops.secrets.traefik_env.path ];
         volumes = [
           "/srv/traefik/letsencrypt:/letsencrypt"
           "/srv/traefik/conf:/etc/traefik/conf"

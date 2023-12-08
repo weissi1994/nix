@@ -663,7 +663,7 @@ trough {
     tesseract4
     foot
     waybar
-    pkgs.unstable.obsidian
+    obsidian
     networkmanagerapplet
     dmenu-wayland
     ulauncher

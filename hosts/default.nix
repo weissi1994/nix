@@ -8,10 +8,10 @@
     ./_mixins/services/smartmon.nix
     ./_mixins/services/security.nix
     ./_mixins/services/autoupdate.nix
+    ./_mixins/services/openssh.nix
     ./_mixins/programs/hardware.nix
   ]
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (hostname != "installer") ./_mixins/services/openssh.nix
   ++ lib.optional (hostname != "installer") ./_mixins/virt
   ++ lib.optional (os_disk != null) ./_mixins/hardware/${os_layout}/os.nix
   ++ lib.optional (data_disks != []) ./_mixins/hardware/${data_layout}/data.nix
@@ -78,6 +78,8 @@
       rsync
     ];
     systemPackages = with pkgs; [
+      age
+      sops
       neovim
       pciutils
       psmisc
