@@ -15,7 +15,7 @@ let
   menu = "nwggrid -b '${colorScheme.background}'";
   filebrowser = "nemo";
   webbrowser = "brave";
-  webbrowserPersistent = "google-chrome-stable";
+  webbrowserPersistent = "NIXOS_OZONE_WL=1 google-chrome-stable";
   musicplayer = "spotify";
 in
 {
@@ -439,18 +439,18 @@ trough {
       "--unsupported-gpu"
     ];
     wrapperFeatures.gtk = true;
-    extraSessionCommands = ''
-      export _JAVA_AWT_WM_NONREPARENTING=1
-      export GTK_THEME='Catppuccin-Mocha-Compact-Blue-Dark:dark'
-      export QT_AUTO_SCREEN_SCALE_FACTOR=1
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-      export GDK_BACKEND=wayland
-      export XDG_CURRENT_DESKTOP=sway
-      export WLR_RENDERER=vulkan
-      export WLR_NO_HARDWARE_CURSORS=1
-      export XWAYALND_NO_GLAMOR=1
-    '';
+    # extraSessionCommands = ''
+    #   export _JAVA_AWT_WM_NONREPARENTING=1
+    #   export GTK_THEME='Catppuccin-Mocha-Compact-Blue-Dark:dark'
+    #   export QT_AUTO_SCREEN_SCALE_FACTOR=1
+    #   export QT_QPA_PLATFORM=wayland
+    #   export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    #   export GDK_BACKEND=wayland
+    #   export XDG_CURRENT_DESKTOP=sway
+    #   export WLR_RENDERER=vulkan
+    #   export WLR_NO_HARDWARE_CURSORS=1
+    #   export XWAYALND_NO_GLAMOR=1
+    # '';
     config = {
       gaps = {
         smartBorders = "on";
@@ -632,7 +632,7 @@ trough {
         # Spotify
         { command = "spotify"; }
         # Web browsing
-        { command = "google-chrome-stable"; }
+        { command = "NIXOS_OZONE_WL=1 google-chrome-stable"; }
         # Chatting
         { command = "telegram-desktop"; }
         # Polkit
@@ -671,6 +671,7 @@ trough {
     wofi
     wofi-emoji
     slurp
+    ydiff
     grim
     swappy
     swaylock-effects

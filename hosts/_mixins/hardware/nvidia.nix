@@ -16,17 +16,10 @@
   # services.xserver.videoDrivers = ["nvidia"];
   # boot.kernelParams = ["nvidia_drm.fbdev=1"];
 
-
-  # environment.variables.VDPAU_DRIVER = "va_gl";
-  # environment.variables.LIBVA_DRIVER_NAME = "nvidia";
-
   programs.sway.extraOptions = ["--unsupported-gpu"];
 
-  # Force wayland when possible 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  # might fix flickering in yt fullscreen
-  environment.sessionVariables.WLR_RENDERER = "vulkan"; 
+  # Force wayland when possible  (fixes flickering)
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Fix disappearing cursor on Hyprland / Sway
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; 
