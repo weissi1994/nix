@@ -62,23 +62,9 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  # Force wayland when possible 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  # might fix flickering in yt fullscreen
-  environment.sessionVariables.WLR_RENDERER = "vulkan"; 
-
-  # Fix disappearing cursor on Hyprland / Sway
-  environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; 
-
-  # electron apps
-  # environment.sessionVariables.GBM_BACKEND = "nvidia-drm";
-  # environment.sessionVariables.__GLX_VENDOR_LIBRARY_NAME = "nvidia";
-
   # enable sway window manager
   programs.sway = {
     enable = true;
-    extraOptions = ["--unsupported-gpu"];
     wrapperFeatures.gtk = true; # so that gtk works properly
     extraPackages = with pkgs; [
       swaylock # lockscreen
