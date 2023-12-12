@@ -1,4 +1,8 @@
 { config, lib, hostname, pkgs, username, ... }: {
+  imports = [
+    ../../programs/nvim
+    ../../programs/shell/fish.nix
+  ];
   home = {
     file.".face".source = ./face.png;
     file.".ssh/id_rsa_priv_yubikey.pub".source = ./id_rsa_priv_yubikey.pub;
@@ -35,7 +39,7 @@
         HostName 192.168.1.101
 
       Host xeus
-        User daniel
+        User ion
         Port 22
         HostName 192.168.1.110
 

@@ -8,7 +8,7 @@ creation_rules:
           - *admin_ion
         age:
           - *server_xeus
-  - path_regex: secrets/xeus_sec\.(yaml|json|env|ini)$
+  - path_regex: secrets/xeus\.(yaml|json|env|ini)$
     key_groups:
       - pgp:
           - *admin_ion

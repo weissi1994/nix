@@ -60,7 +60,11 @@ planned:
 ## Screenshots
 
 ![Main screen](screenshots/screen.png)
+![Main screen 2](screenshots/screen2.png)
 
 **Inspired by:**
 
 - https://christine.website/blog/paranoid-nixos-2021-07-18/
+- https://github.com/sdobz/nix-config
+- https://github.com/dmadisetti/.dots
+- https://github.com/Mic92/dotfiles

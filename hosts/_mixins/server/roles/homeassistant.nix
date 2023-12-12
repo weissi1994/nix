@@ -13,7 +13,6 @@
         "traefik.http.routers.homeassistant.tls.certresolver" = "myresolver";
       };
       volumes = [
-        "/etc/localtime:/etc/localtime:ro"
         "/srv/homeassistant:/config"
       ];
     };

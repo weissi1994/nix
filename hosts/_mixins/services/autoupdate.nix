@@ -2,7 +2,7 @@
 {
   system.autoUpgrade = {
     enable = true;
-    flake = "git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}"; # inputs.self.outPath;
+    flake = "git+https://gitlab.n0de.biz/daniel/nix?ref=main#${hostname}";
     flags = [
       "--update-input"
       "nixpkgs"

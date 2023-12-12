@@ -4,6 +4,5 @@
     ./sway
     ./waybar
     ./terminal
-    ./nvim
   ];
 }

@@ -3,16 +3,12 @@ stages:
   - build
   - deploy
 
-default:
-  tags:
-    - nix
-
 check-flake:
   stage: check
   script:
     - export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
     - export NIXPKGS_ALLOW_UNFREE=1
-    - nix flake check --impure --all-systems
+    - nix --extra-experimental-features nix-command --extra-experimental-features flakes --accept-flake-config flake check --impure --all-systems
 
 iso:
   stage: build
@@ -34,7 +30,7 @@ iso:
           - installer-pantheon
   script:
     - export ARTIFACT_NAME="${CI_PROJECT_NAME}-${HOST}-${CI_COMMIT_REF_SLUG}.iso"
-    - nix --accept-flake-config build ".#nixosConfigurations.$HOST.config.system.build.isoImage"
+    - nix --extra-experimental-features nix-command --extra-experimental-features flakes --accept-flake-config build ".#nixosConfigurations.$HOST.config.system.build.isoImage"
     - cp -L ./result/iso/*.iso $ARTIFACT_NAME
   artifacts:
     paths:
@@ -58,13 +54,13 @@ netboot:
           - installer-sway
           - installer-pantheon
   script:
-    - nix build .#nixosConfigurations.$HOST.config.system.build.initialRamdisk
+    - nix --extra-experimental-features nix-command --extra-experimental-features flakes --accept-flake-config build .#nixosConfigurations.$HOST.config.system.build.initialRamdisk
     - rm -f /srv/netboot/assets/nixos/$HOST/initrd || true
     - cp -L ./result/initrd /srv/netboot/assets/nixos/$HOST/
-    - nix build .#nixosConfigurations.$HOST.config.system.build.kernel
+    - nix --extra-experimental-features nix-command --extra-experimental-features flakes --accept-flake-config build .#nixosConfigurations.$HOST.config.system.build.kernel
     - rm -f /srv/netboot/assets/nixos/$HOST/bzImage || true
     - cp -L ./result/bzImage /srv/netboot/assets/nixos/$HOST/
-    - nix build .#nixosConfigurations.installer-pantheon.config.system.build.toplevel
+    - nix --extra-experimental-features nix-command --extra-experimental-features flakes --accept-flake-config build .#nixosConfigurations.installer-pantheon.config.system.build.toplevel
     - INIT="$(readlink -f ./result)/init"
     - cat ./netboot.ipxe | envsubst > /srv/netboot/assets/nixos/$HOST/netboot.ipxe
 
@@ -85,5 +81,6 @@ deploy:
       - HOST:
           - terro
           - bean
+          - xeus
   script:
-    - nixos-rebuild --flake ".#${HOST}" --target-host "ion@${HOST}" --use-remote-sudo
+    - nixos-rebuild --extra-experimental-features nix-command --extra-experimental-features flakes --flake ".#${HOST}" --target-host "ion@${HOST}" --use-remote-sudo

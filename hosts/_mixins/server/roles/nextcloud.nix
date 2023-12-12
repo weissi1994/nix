@@ -27,6 +27,10 @@
       image = "nextcloud:23";
       hostname = "nextcloud";
       environmentFiles = [ config.sops.secrets.nextcloud_env.path ];
+      dependsOn = [
+        "nextcloud-db"
+        "redis-nextcloud"
+      ];
       volumes = [
         "/srv/nextcloud/data:/var/www/html"
         "/srv/nextcloud/memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit.ini:ro"

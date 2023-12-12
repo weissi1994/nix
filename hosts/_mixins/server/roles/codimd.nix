@@ -13,6 +13,9 @@
         "traefik.http.routers.codimd.tls.certresolver" = "myresolver";
       };
       environmentFiles = [ config.sops.secrets.codimd_env.path ];
+      dependsOn = [
+        "codimd-db"
+      ];
       volumes = [
         "/srv/codimd/data:/home/hackmd/app/public/uploads"
       ];

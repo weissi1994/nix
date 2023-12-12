@@ -1,7 +1,7 @@
 { inputs, config, roles, hostname, pkgs, ... }: {
   imports = roles;
 
-  sops.defaultSopsFile = ../../../secrets/${hostname}_sec.yaml;
+  sops.defaultSopsFile = ../../../secrets/${hostname}.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   users.users.cloudflared = {
@@ -25,6 +25,11 @@
       User = "cloudflared";
       Group = "cloudflared";
     };
+  };
+
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+  services.resolved = {
+    enable = true;
   };
 
   virtualisation.oci-containers = {

@@ -1,8 +1,18 @@
-{ inputs, config, ... }: {
+{ inputs, pkgs, config, ... }: {
+
+  systemd.services.create-webhook-pod = with config.virtualisation.oci-containers; {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "${backend}-webhook-web.service" "${backend}-redis-webhook.service" "${backend}-laravel-echo-server.service" ];
+    script = ''
+      ${pkgs.podman}/bin/podman pod exists webhook || \
+        ${pkgs.podman}/bin/podman pod create -n webhook
+    '';
+  };
+
   virtualisation.oci-containers.containers = {
-    webhook = {
+    webhook-web = {
       image = "webhooksite/webhook.site";
-      hostname = "webhook.n0de.biz";
+      extraOptions = [ "--pod=webhook" ];
       cmd = [
         "php"
         "artisan"
@@ -31,16 +41,22 @@
         "QUEUE_DRIVER" = "redis";
         "ECHO_HOST_MODE" = "path";
       };
+      dependsOn = [
+        "redis-webhook"
+      ];
     };
     redis-webhook = {
       image = "redis:alpine";
-      hostname = "redis-webhook";
+      extraOptions = [ "--pod=webhook" ];
     };
     laravel-echo-server = {
       image = "mintopia/laravel-echo-server";
-      hostname = "laravel-echo-server";
+      extraOptions = [ "--pod=webhook" ];
+      dependsOn = [
+        "redis-webhook"
+      ];
       environment = {
-        "LARAVEL_ECHO_SERVER_AUTH_HOST" = "http://webhook";
+        "LARAVEL_ECHO_SERVER_AUTH_HOST" = "http://webhook-web";
         "LARAVEL_ECHO_SERVER_HOST" = "0.0.0.0";
         "LARAVEL_ECHO_SERVER_PORT" = "6001";
         "ECHO_REDIS_PORT" = "6379";

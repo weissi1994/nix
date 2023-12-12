@@ -1,5 +1,13 @@
 { config, hostname, pkgs, lib, ... }:
 {
+  home.file.".config/greeter.sh".source = ./files/greeter.sh;
+
+  home.packages = with pkgs; [
+    figlet # For greeter script
+    cava   # for cli equealizer #unixporn
+    unstable.eza    # nice ls
+  ];
+
   programs.fish = {
     enable = true;
     loginShellInit = builtins.readFile ./files/fish/config.fish;

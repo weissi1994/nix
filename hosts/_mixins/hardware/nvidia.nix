@@ -11,6 +11,10 @@
     ];
   };
 
+  environment.systemPackages = with pkgs; [
+    nvitop
+  ];
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" "nouveau" ];
   # services.xserver.videoDrivers = ["nvidia"];
