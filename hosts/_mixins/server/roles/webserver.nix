@@ -9,6 +9,9 @@
         passwordFile = config.sops.secrets.n0de_registry_pass.path;
       };
       hostname = "www";
+      dependsOn = [
+        "gitlab"
+      ];
       labels = {
         "traefik.enable" = "true";
         "traefik.http.routers.www.rule" = "HostRegexp(`{subdomain:.*}.n0de.biz`, `n0de.biz`, `www.n0de.biz`)";
@@ -28,6 +31,9 @@
         passwordFile = config.sops.secrets.n0de_registry_pass.path;
       };
       hostname = "meownster";
+      dependsOn = [
+        "gitlab"
+      ];
       labels = {
         "traefik.enable" = "true";
         "traefik.http.routers.meownster.rule" = "HostRegexp(`{subdomain:.*}.meownster.com`, `meownster.com`, `www.meownster.com`)";
@@ -47,6 +53,9 @@
         passwordFile = config.sops.secrets.n0de_registry_pass.path;
       };
       hostname = "cv";
+      dependsOn = [
+        "gitlab"
+      ];
       labels = {
         "traefik.enable" = "true";
         "traefik.http.routers.cv.rule" = "Host(`cv.n0de.biz`)";

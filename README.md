@@ -1,7 +1,5 @@
 # Yubikey-centric NixOs flake
 
-> Only intended for desktop usage
-
 **Desktop:** [sway](https://github.com/swaywm/sway)  
 **Terminal:** [kitty](https://github.com/kovidgoyal/kitty)  
 **Shell:** [fish](https://github.com/fish-shell/fish-shell)  
@@ -14,7 +12,65 @@
 - luks fido2 encrypted with yubikey (passphrase as fallback)
 - secrets managed at runtime with gopass (also backed by yubikey)
 
-## Setup of a new host
+## Basic Keybindings
+
+### Sway
+
+**Modifier:** `Meta/Windows Key`
+
+```
+mod+d           --> App Launcher
+mod+Enter       --> Terminal
+mod+w           --> Tab layout
+mod+Shift+Space --> Toggle floating
+
+# Window navigation
+mod+up    --> move up
+mod+down  --> move down
+mod+left  --> move left
+mod+right --> move right
+```
+
+### Kitty
+
+**Modifier:** `Ctrl+Shift`
+
+```
+mod+Enter --> new split pane
+mod+t     --> new tab
+
+# Window navigation
+mod+up    --> move up
+mod+down  --> move down
+mod+left  --> move left
+mod+right --> move right
+
+# Tab navigation
+mod+page_up    --> next tab
+mod+page_down  --> previous tab
+```
+
+### NeoVim
+
+**Modifier:** `Ctrl / Alt`
+
+```
+Space + f + f --> fuzzy find files
+Space + /     --> fuzzy find text
+Space + e     --> open file-tree
+
+# Window navigation
+Ctrl+up    --> move up
+Ctrl+down  --> move down
+Ctrl+left  --> move left
+Ctrl+right --> move right
+
+# Buffer navigation
+Alt+right --> next buffer
+Alt+left  --> previous buffer
+```
+
+## Setup of a new desktop host
 
 1. Grab the latest ISO and boot it on your target machine
 2. Identify installation drive '/dev/sda' if just one is present
@@ -32,13 +88,25 @@
 8. Commit and push
 9. Run `install-system <NEW_HOST>`
 
+## Setup a new server
+
+1. Navigate to `~/dev/nix` and copy template files for the new host
+   - `cp -r hosts/generic hosts/<NEW_HOST>`
+   - `cp home/_mixins/users/ion/hosts/generic.nix home/_mixins/users/ion/hosts/<NEW_HOST>.nix`
+2. Modify copied files and `flake.nix` according to your needs
+   - Make sure to replace `os_disk` with your target disks WWN-ID in `flake.nix`
+3. Commit and push
+4. Grab latest installer ISO and boot it
+5. Run `install-system <NEW_HOST>`
+
+## Add new User
+
+1. Navigate to `~/dev/nix` and copy template files for the new host
+   - `cp -r hosts/_mixins/users/ion hosts/_mixins/users/<NEW_USER>`
+   - `cp -r home/_mixins/users/ion home/_mixins/users/<NEW_USER>`
+2. Modify copied files and `flake.nix` according to your needs
+
 ---
-
-planned:
-
-- netboot into minmal config accessibele by root via ssh
-- deploy with deploy-rs
-- kepp up2date with polling from client via autoupdate service
 
 ## Things to consider when forking or copying stuff
 

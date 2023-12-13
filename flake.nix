@@ -137,8 +137,9 @@
       #  - sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
       terro   = mkHost { hostname = "terro"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/wwn-0x5002538e4084d7cc"; };
       bean    = mkHost { hostname = "bean";  username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/nvme-eui.5cd2e42a8140cf60"; };
+      stay    = mkHost { hostname = "stay";  username = "dweissengruber"; desktop = "sway"; hm = true; os_disk = "/dev/disk/by-id/XXX"; };
       # Copy this line for new hosts
-      generic = mkHost { hostname = "generic"; username = "ion"; hm = true; os_disk = "/dev/vda"; };
+      generic = mkHost { hostname = "generic"; username = "ion"; desktop = "sway"; hm = true; os_disk = "/dev/vda"; };
       # ISOs (for initial installation and testing)
       #  - nix build .#nixosConfigurations.iso.config.formats.iso
       #  - nix build .#nixosConfigurations.iso.config.formats.install-iso

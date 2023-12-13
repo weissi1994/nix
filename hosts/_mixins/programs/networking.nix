@@ -7,6 +7,8 @@
     termshark
     dog
     nmap
+    trippy
+    gping
     ipcalc
     certigo
     dhcpdump

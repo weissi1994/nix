@@ -2,12 +2,11 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-7th-gen
+    inputs.nixos-hardware.nixosModules.system76
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ../_mixins/hardware/laptop.nix
-    ../_mixins/hardware/wwan.nix
     ../_mixins/hardware/systemd-boot.nix
     ../_mixins/services/pipewire.nix
   ];

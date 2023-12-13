@@ -5,8 +5,7 @@
   ];
   home = {
     file.".face".source = ./face.png;
-    file.".ssh/id_rsa_priv_yubikey.pub".source = ./id_rsa_priv_yubikey.pub;
-    # file.".ssh/authorized_keys".source = ./id_rsa_priv_yubikey.pub;
+    file.".ssh/id_rsa_yubikey.pub".source = ./id_rsa_yubikey.pub;
     file.".ssh/config".text = "
       Host *
         CanonicalizeHostname yes
@@ -24,55 +23,7 @@
         AddKeysToAgent yes
         ControlPath ~/.ssh/sessions/%C
         PubkeyAcceptedKeyTypes +ssh-rsa
-        IdentityFile ~/.ssh/id_rsa_priv_yubikey.pub
-
-      Host git.n0de.biz
-        ProxyCommand /usr/bin/cloudflared access ssh --hostname %h
-
-      Host ssh.n0de.biz
-        ProxyCommand /usr/bin/cloudflared access ssh --hostname %h
-        User daniel
-
-      Host home
-        User daniel
-        Port 2222
-        HostName 192.168.1.101
-
-      Host xeus
-        User ion
-        Port 22
-        HostName 192.168.1.110
-
-      Host homenet
-        User root
-        Port 22
-        HostKeyAlgorithms +ssh-rsa
-        PreferredAuthentications password
-        PubkeyAuthentication no
-        HostName 192.168.1.1
-
-      Host terro
-        User ion
-        Port 22
-        HostKeyAlgorithms +ssh-rsa
-        PreferredAuthentications password
-        PubkeyAuthentication no
-        HostName 192.168.1.101
-
-      Host bean
-        User ion
-        Port 22
-        HostKeyAlgorithms +ssh-rsa
-        PreferredAuthentications password
-        PubkeyAuthentication no
-        HostName 192.168.1.107
-
-      Host homeassistant
-        User hassio
-        Port 22
-        PreferredAuthentications password
-        PubkeyAuthentication no
-        HostName homeassistant.lan
+        IdentityFile ~/.ssh/id_rsa_yubikey.pub
 
       Host github.com
         User git
@@ -176,8 +127,8 @@
       # };
     };
     git = {
-      userEmail = "ion@n0de.biz";
-      userName = "ion";
+      userEmail = "dweissengruber@ixopay.com";
+      userName = "dweissengruber";
       signing = {
         key = "A239E341B9CB8257";
         signByDefault = true;

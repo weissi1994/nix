@@ -23,9 +23,26 @@
       dim_opacity = "0.75";
       kitty_mod = "ctrl+shift";
     };
-    # keybindings = {
-    #   "ctrl+c" = "copy_or_interrupt";
-    # };
+    extraConfig = ''
+    # Right click copy previous command output
+    mouse_map right press ungrabbed mouse_select_command_output
+    '';
+    keybindings = {
+      "ctrl+c" = "copy_or_interrupt";
+      "kitty_mod+up" = "neighboring_window up";
+      "kitty_mod+down" = "neighboring_window down";
+      "kitty_mod+left" = "neighboring_window left";
+      "kitty_mod+right" = "neighboring_window right";
+      "kitty_mod+page_up" = "next_tab";
+      "kitty_mod+page_down" = "previous_tab";
+    };
   };
+
   home.file.".config/kitty/ssh.conf".source = ./files/kitty/ssh.conf;
+
+  programs.fish = {
+    shellAliases = {
+      ssh = "kitten ssh";
+    };
+  };
 }
