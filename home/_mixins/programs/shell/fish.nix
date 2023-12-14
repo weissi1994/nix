@@ -22,6 +22,8 @@
       lst = "exa -lahFT --color=always --icons --sort=size --group-directories-first";
       nt = "vim \"+ObsidianWorkspace Private\" +ObsidianToday ~/notes/TODO.md";
 
+      trip = "sudo trip --tui-theme-colors settings-dialog-bg-color=Black,help-dialog-bg-color=Black";
+
       vimup = "nvim --headless \"+Lazy! update\" +qa";
       nvim = "nvim -u ~/.config/nvim/init.lua";
       vim = "nvim";

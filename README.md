@@ -1,4 +1,6 @@
-# Yubikey-centric NixOs flake
+# NixOs Configuration flake
+
+## Desktop Components (Yubikey-centric)
 
 **Desktop:** [sway](https://github.com/swaywm/sway)  
 **Terminal:** [kitty](https://github.com/kovidgoyal/kitty)  
@@ -12,7 +14,14 @@
 - luks fido2 encrypted with yubikey (passphrase as fallback)
 - secrets managed at runtime with gopass (also backed by yubikey)
 
-## Basic Keybindings
+## Server Components
+
+**Shell:** [fish](https://github.com/fish-shell/fish-shell)  
+**Filesystem:** [bcachefs](https://bcachefs.org/)  
+**Firewall:** [opensnitch](https://github.com/evilsocket/opensnitch)  
+**Secret-Management:** [sops-nix](https://github.com/Mic92/sops-nix)
+
+## Basic Desktop Keybindings
 
 ### Sway
 

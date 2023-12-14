@@ -28,13 +28,14 @@
     mouse_map right press ungrabbed mouse_select_command_output
     '';
     keybindings = {
-      "ctrl+c" = "copy_or_interrupt";
       "kitty_mod+up" = "neighboring_window up";
       "kitty_mod+down" = "neighboring_window down";
       "kitty_mod+left" = "neighboring_window left";
       "kitty_mod+right" = "neighboring_window right";
       "kitty_mod+page_up" = "next_tab";
       "kitty_mod+page_down" = "previous_tab";
+      "page_up" = "scroll_page_up";
+      "page_down" = "scroll_page_down";
     };
   };
 

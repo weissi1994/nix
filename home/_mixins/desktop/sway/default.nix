@@ -668,6 +668,7 @@ trough {
     dmenu-wayland
     ulauncher
     nwg-launchers
+    telegram-desktop
     wofi
     wofi-emoji
     slurp

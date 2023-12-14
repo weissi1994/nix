@@ -4,6 +4,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./${hostname}
     ./_mixins/console
+    ./_mixins/firewall
     ./_mixins/users/root
     ./_mixins/services/smartmon.nix
     ./_mixins/services/security.nix
@@ -17,8 +18,6 @@
   ++ lib.optional (data_disks != []) ./_mixins/hardware/${data_layout}/data.nix
   ++ lib.optional (roles != []) ./_mixins/server
   ++ lib.optional (desktop != null) ./_mixins/desktop;
-
-  services.opensnitch.enable = true;
 
   boot = {
     consoleLogLevel = 0;
