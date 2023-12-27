@@ -418,7 +418,7 @@ in
   ++ lib.optional (roles != []) ./server.nix
   ++ lib.optional (desktop != null) ./desktop.nix;
 
-  environment.etc."opensnitchd/system-fw.json".source = format.generate "system-fw.json" system-fw;
+  # environment.etc."opensnitchd/system-fw.json".source = format.generate "system-fw.json" system-fw;
 
   services.opensnitch = {
     enable = true;
