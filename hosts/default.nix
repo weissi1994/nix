@@ -4,7 +4,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./${hostname}
     ./_mixins/console
-    ./_mixins/firewall
     ./_mixins/users/root
     ./_mixins/services/smartmon.nix
     ./_mixins/services/security.nix

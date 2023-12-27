@@ -3,6 +3,7 @@
     ../services/cups.nix
     ../programs/networking.nix
     ../programs/ctf.nix
+    ../firewall
   ]
   ++ lib.optional (builtins.pathExists (./. + "/${desktop}.nix")) ./${desktop}.nix;
 
