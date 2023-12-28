@@ -1,8 +1,28 @@
 { inputs, config, ... }: {
+  systemd.services.podman-delayed-containers = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    description = "Start the containers which require private registry delayed.";
+    serviceConfig = {
+      # see systemd man pages for more information on the various options for "Type": "notify"
+      # specifies that this is a service that waits for notification from its predecessor (declared in
+      # `after=`) before starting
+      Type = "notify";
+      # the command to execute when the service starts up 
+      ExecStart = ''
+      while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' https://registry.n0de.biz/v2/)" != "401" ]]; do sleep 5; done
+      ${pkgs.systemd}/bin/systemctl start podman-www.service
+      ${pkgs.systemd}/bin/systemctl start podman-meownster.service
+      ${pkgs.systemd}/bin/systemctl start podman-cv.service
+      ''; 
+    };
+  };
+
   sops.secrets.n0de_registry_pass = { };
   virtualisation.oci-containers.containers = {
     www = {
       image = "registry.n0de.biz/daniel/derzer:master";
+      autoStart = false;
       login = {
         registry = "registry.n0de.biz";
         username = "daniel";
@@ -25,6 +45,7 @@
     };
     meownster = {
       image = "registry.n0de.biz/meownster/website/master:latest";
+      autoStart = false;
       login = {
         registry = "registry.n0de.biz";
         username = "daniel";
@@ -47,6 +68,7 @@
     };
     cv = {
       image = "registry.n0de.biz/daniel/cv:2721287506438dcae2c7f7406d503b78f5c4242e";
+      autoStart = false;
       login = {
         registry = "registry.n0de.biz";
         username = "daniel";
