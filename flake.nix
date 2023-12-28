@@ -176,7 +176,7 @@
           ./hosts/_mixins/server/roles/netboot.nix
           ./hosts/_mixins/server/roles/valheim.nix
           ./hosts/_mixins/server/roles/webhook.nix
-          ./hosts/_mixins/server/roles/4scanner.nix
+          # ./hosts/_mixins/server/roles/4scanner.nix
           ./hosts/_mixins/server/roles/nextcloud.nix
           ./hosts/_mixins/server/roles/webserver.nix
           ./hosts/_mixins/server/roles/hoppscotch.nix

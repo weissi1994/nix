@@ -128,11 +128,17 @@ Alt+left  --> previous buffer
 2. Update `home/_mixins/users/ion/u2f_keys`
    > Used by PAM for login and sudo
    - Get yours with `nix-shell -p pam_u2f --run 'pamu2fcfg -o "pam://$TARGET_HOST"'`
-3. Add another Yubikey as backup
+3. Add another Yubikey as backup (See below)
    > So you wont get locked out when losing a yubikey
    - luks: just enroll another yubikey with: `systemd-cryptenroll --fido2-device=auto <device>`
    - pam auth: add another yubikey to the `u2f_keys` file, `\n` seperated
    - ssh auth: add another ssh publickey to the ` *.nix` files listed in step 1, also `\n` seperated
+
+### (Backup) Yubikey Setup
+
+- Enroll luks on all desktops with `systemd-cryptenroll --fido2-device=auto <device>`
+- Generate u2f_keys with `nix-shell -p pam_u2f --run 'pamu2fcfg -o "pam://$TARGET_HOST" -n'`
+- Generate ssh key with `ssh-keygen -t ed25519-sk`
 
 ## Screenshots
 
