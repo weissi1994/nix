@@ -85,6 +85,7 @@
         User git
         IdentitiesOnly yes
         ForwardAgent no
+        IdentityFile ~/.ssh/id_rsa_priv_yubikey.pub
     ";
     # A Modern Unix experience
     # https://jvns.ca/blog/2022/04/12/a-list-of-new-ish--command-line-tools/
