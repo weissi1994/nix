@@ -6,7 +6,7 @@
   home = {
     file.".face".source = ./face.png;
     file.".ssh/id_rsa_priv_yubikey.pub".source = ./id_rsa_priv_yubikey.pub;
-    # file.".ssh/authorized_keys".source = ./id_rsa_priv_yubikey.pub;
+    file.".ssh/id_ed25519_sk.pub".source = ./id_ed25519_sk.pub;
     file.".ssh/config".text = "
       Host *
         CanonicalizeHostname yes
@@ -24,7 +24,7 @@
         AddKeysToAgent yes
         ControlPath ~/.ssh/sessions/%C
         PubkeyAcceptedKeyTypes +ssh-rsa
-        IdentityFile ~/.ssh/id_rsa_priv_yubikey.pub
+        IdentityFile ~/.ssh/id_ed25519_sk.pub
 
       Host git.n0de.biz
         ProxyCommand /usr/bin/cloudflared access ssh --hostname %h
