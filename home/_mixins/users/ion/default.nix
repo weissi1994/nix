@@ -7,6 +7,7 @@
     file.".face".source = ./face.png;
     file.".ssh/id_rsa_priv_yubikey.pub".source = ./id_rsa_priv_yubikey.pub;
     file.".ssh/id_ed25519_sk.pub".source = ./id_ed25519_sk.pub;
+    file.".ssh/id_ed25519_sk_backup.pub".source = ./id_ed25519_sk_backup.pub;
     file.".ssh/config".text = "
       Host *
         CanonicalizeHostname yes

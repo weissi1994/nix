@@ -139,6 +139,7 @@
             gopass-jsonapi configure
           end
           gopass cat ssh/id_ed25519_sk > ~/.ssh/id_ed25519_sk
+          gopass cat ssh/id_ed25519_sk_backup > ~/.ssh/id_ed25519_sk_backup
         '';
       };
       sync-repos = "sync-dotfiles; sync-keystore";
