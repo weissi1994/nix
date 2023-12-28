@@ -1,4 +1,4 @@
-{ inputs, config, ... }: {
+{ inputs, config, pkgs, ... }: {
   systemd.services.podman-delayed-containers = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
