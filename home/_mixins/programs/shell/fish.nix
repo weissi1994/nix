@@ -138,6 +138,7 @@
             gopass clone git@gitlab.n0de.biz:daniel/keystore.git
             gopass-jsonapi configure
           end
+          gopass cat ssh/id_ed25519_sk > ~/.ssh/id_ed25519_sk
         '';
       };
       sync-repos = "sync-dotfiles; sync-keystore";
