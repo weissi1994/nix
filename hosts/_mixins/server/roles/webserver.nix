@@ -77,7 +77,7 @@
         "traefik.enable" = "true";
         "traefik.http.routers.cv.rule" = "Host(`cv.n0de.biz`)";
         "traefik.http.routers.cv.priority" = "2";
-        "traefik.http.services.cv.loadbalancer.server.port" = "8080";
+        "traefik.http.services.cv.loadbalancer.server.port" = "80";
         "traefik.http.routers.cv.entrypoints" = "websecure";
         "traefik.http.routers.cv.tls.certresolver" = "myresolver";
       };
