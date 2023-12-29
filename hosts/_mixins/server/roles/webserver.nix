@@ -62,7 +62,7 @@
       };
     };
     cv = {
-      image = "registry.n0de.biz/daniel/cv:2721287506438dcae2c7f7406d503b78f5c4242e";
+      image = "registry.n0de.biz/daniel/cv/master:latest";
       autoStart = false;
       login = {
         registry = "registry.n0de.biz";
