@@ -15,6 +15,7 @@
       { name = "grc"; src = pkgs.fishPlugins.grc.src; }
       { name = "fzf"; src = pkgs.fishPlugins.fzf.src; }
       { name = "autopair"; src = pkgs.fishPlugins.autopair.src; }
+      { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
     ];
     shellAliases = {
       l = "exa -lahF --color=always --icons --sort=size --group-directories-first";
