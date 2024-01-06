@@ -112,6 +112,7 @@
       fast-cli # Terminal fast.com
       fd # Modern Unix `find`
       fish
+      vscode # GUI Code editor
       pwgen # password generator
       glow # Terminal Markdown renderer
       gping # Modern Unix `ping`
