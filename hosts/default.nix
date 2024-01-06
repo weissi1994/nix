@@ -77,6 +77,7 @@
     ];
     systemPackages = with pkgs; [
       age
+      zip
       sops
       neovim
       pciutils
