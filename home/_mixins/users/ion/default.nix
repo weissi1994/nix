@@ -79,6 +79,7 @@
         User git
         IdentitiesOnly yes
         ForwardAgent no
+        IdentityFile ~/.ssh/id_rsa_priv_yubikey.pub
 
       Host gitlab.n0de.biz
         Port 2222
