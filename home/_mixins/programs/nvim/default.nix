@@ -9,6 +9,7 @@
     gnumake # for compiling c
     stylua # lua formatter
     dotnet-sdk_8 # for c#/dotnet
+    typos # Source code spell checker
   ];
 
   home.file.".config/nvim" = {
