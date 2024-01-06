@@ -650,6 +650,7 @@ trough {
     extraConfig = ''
       for_window [urgent="latest"] focus
       focus_on_window_activation   focus
+      focus_follows_mouse yes
 
       for_window [app_id="(?i)(?:blueman-manager|azote|gnome-disks|opensnitch_ui)"] floating enable
       for_window [app_id="(?i)(?:pavucontrol|nm-connection-editor|gsimplecal|galculator)"] floating enable
