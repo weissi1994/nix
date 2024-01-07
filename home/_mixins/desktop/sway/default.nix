@@ -664,7 +664,7 @@ trough {
     tesseract4
     foot
     waybar
-    unstable.obsidian # electron app
+    obsidian.override { elctron = pkgs.electron_26 } # electron app
     networkmanagerapplet
     dmenu-wayland
     ulauncher
