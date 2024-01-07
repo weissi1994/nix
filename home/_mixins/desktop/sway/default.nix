@@ -664,7 +664,9 @@ trough {
     tesseract4
     foot
     waybar
-    obsidian # electron app
+    (obsidian.override {
+      electron = electron;
+    }) # electron app
     networkmanagerapplet
     dmenu-wayland
     ulauncher
@@ -684,8 +686,6 @@ trough {
     wl-clipboard
     cinnamon.nemo
   ];
-
-  pkgs.obsidian.override = { elctron = pkgs.electron_26; };
 
   gtk = {
     enable = true;
