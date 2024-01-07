@@ -13,7 +13,7 @@
   services.jack.alsa.support32Bit = true;
   services.pipewire.alsa.support32Bit = true;
   systemd.packages = [
-    (pkgs.r2modman.override {
+    (pkgs.unstable.r2modman.override {
       electron = pkgs.electron;
     }) # electron app
   ];
