@@ -26,18 +26,6 @@
           "data" = "${lib.getBin pkgs.spotify}/share/spotify/.spotify-wrapped";
         };
       };
-      electron = {
-        "name" = "allow-electron";
-        "enabled" = true;
-        "action" = "allow";
-        "duration" = "always";
-        "operator" = {
-          "type" = "simple";
-          "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.electron_25}/libexec/electron/electron";
-        };
-      };
       trip = {
         "name" = "allow-trip";
         "enabled" = true;
