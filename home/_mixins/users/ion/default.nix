@@ -43,6 +43,7 @@
         User ion
         Port 22
         HostName 192.168.1.110
+        IdentityFile ~/.ssh/id_rsa_priv_yubikey.pub
 
       Host homenet
         User root
