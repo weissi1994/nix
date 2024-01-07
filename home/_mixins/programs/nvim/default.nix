@@ -5,7 +5,6 @@
     cargo # Lazy updates
     cmake # Lazy updates
     rustc # rust
-    rustup # rust
     rustfmt # rust
     clippy # rust linter
     rust-analyzer # rust
