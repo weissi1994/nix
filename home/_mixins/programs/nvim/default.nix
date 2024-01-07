@@ -10,8 +10,6 @@
     stylua # lua formatter
     dotnet-sdk_8 # for c#/dotnet
     typos # Source code spell checker
-    mono # c# stuff
-    mono4 # c# stuff
   ];
 
   home.file.".config/nvim" = {
