@@ -685,7 +685,7 @@ trough {
     cinnamon.nemo
   ];
 
-  pkgs.obsidian.override { elctron = pkgs.electron_26 };
+  pkgs.obsidian.override = { elctron = pkgs.electron_26 };
 
   gtk = {
     enable = true;
