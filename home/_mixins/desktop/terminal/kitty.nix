@@ -40,10 +40,4 @@
   };
 
   home.file.".config/kitty/ssh.conf".source = ./files/kitty/ssh.conf;
-
-  programs.fish = {
-    shellAliases = {
-      ssh = "kitten ssh";
-    };
-  };
 }
