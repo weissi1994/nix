@@ -16,11 +16,11 @@
     sudo.u2fAuth = true;
   };
 
-  security.auditd.enable = true;
-  security.audit.enable = lib.mkDefault true;
-  security.audit.rules = [
-    "-a exit,always -F arch=b64 -S execve"
-  ];
+  # security.auditd.enable = true;
+  # security.audit.enable = lib.mkDefault true;
+  # security.audit.rules = [
+  #   "-a exit,always -F arch=b64 -S execve"
+  # ];
 
   security.sudo = {
     enable = true;
