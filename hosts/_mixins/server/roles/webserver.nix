@@ -8,7 +8,7 @@
       # `after=`) before starting
       Type = "notify";
       # the command to execute when the service starts up 
-      ExecStart = ''${pkgs.bash}/bin/bash -c "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w '''%{http_code}''' https://registry.n0de.biz/v2/)\" != \"401\" ]]; do sleep 5; done; ${pkgs.systemd}/bin/systemctl start podman-www.service; ${pkgs.systemd}/bin/systemctl start podman-meownster.service; ${pkgs.systemd}/bin/systemctl start podman-cv.service;"''; 
+      ExecStart = ''${pkgs.bash}/bin/bash -c "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w '''%{http_code}''' https://registry.n0de.biz/v2/)\" != \"401\" ]]; do sleep 5; done; ${pkgs.systemd}/bin/systemctl restart podman-www.service; ${pkgs.systemd}/bin/systemctl restart podman-meownster.service; ${pkgs.systemd}/bin/systemctl restart podman-cv.service; exit 0"''; 
       NotifyAccess = "all";
       Restart = "always";
       TimeoutStartSec = "0";
