@@ -126,7 +126,7 @@
         sudo systemctl restart podman-gitlab.service;
         sudo systemctl restart podman-traefik.service;
         '';
-      }
+      };
 
       # Repo helper
       sync-dotfiles = {
