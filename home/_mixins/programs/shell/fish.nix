@@ -120,6 +120,14 @@
         body = "kitten ssh $argv";
       };
 
+      restart-dockers = {
+        body = ''
+        sudo systemctl list-units --output json | jq -r '.[]|select(.unit | startswith("podman-")) | select(.unit | startswith("podman-prune") | not) | select(.unit | startswith("podman-gitlab") | not) | select(.unit | startswith("podman-traefik") | not) | .unit' | xargs sudo systemctl restart
+        sudo systemctl restart podman-gitlab.service;
+        sudo systemctl restart podman-traefik.service;
+        '';
+      }
+
       # Repo helper
       sync-dotfiles = {
         body = ''
