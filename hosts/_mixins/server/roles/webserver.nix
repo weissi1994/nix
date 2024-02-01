@@ -1,6 +1,5 @@
 { inputs, config, pkgs, ... }: {
   systemd.services.podman-delayed-containers = {
-    wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
     description = "Start the containers which require private registry delayed.";
     serviceConfig = {
@@ -10,6 +9,10 @@
       Type = "notify";
       # the command to execute when the service starts up 
       ExecStart = ''${pkgs.bash}/bin/bash -c "while [[ \"$(${pkgs.curl}/bin/curl -s -o /dev/null -w '''%{http_code}''' https://registry.n0de.biz/v2/)\" != \"401\" ]]; do sleep 5; done; ${pkgs.systemd}/bin/systemctl start podman-www.service; ${pkgs.systemd}/bin/systemctl start podman-meownster.service; ${pkgs.systemd}/bin/systemctl start podman-cv.service;"''; 
+      NotifyAccess = "all";
+      Restart = "always";
+      TimeoutStartSec = "0";
+      TimeoutStopSec = "120";
     };
   };
 
