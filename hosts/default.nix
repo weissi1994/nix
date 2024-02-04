@@ -1,4 +1,4 @@
-{ config, desktop, roles, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, os_layout, data_disks, data_layout, ... }:
+{ config, nixvim, desktop, roles, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, os_layout, data_disks, data_layout, ... }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -79,7 +79,11 @@
       age
       zip
       sops
-      neovim
+      (nixvim.legacyPackages."${system}".makeNixvim {
+        colorschemes.gruvbox.enable = true;
+	plugins.lsp.servers.htmx.enable = false;
+	plugins.lsp.servers.htmx.package = pkgs.unstable.htmx-lsp;
+      })
       pciutils
       psmisc
       unzip

@@ -37,6 +37,8 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    nixvim.url = "github:nix-community/nixvim";
+
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
@@ -50,7 +52,7 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, nix-formatter-pack, home-manager, nixvim, sops-nix, ... }@inputs:
   let
     inherit (self) outputs;
 
@@ -60,27 +62,36 @@
       extraSpecialArgs = {
         inherit self inputs outputs desktop hostname platform username stateVersion;
       };
-      modules = [ ./home ];
+      modules = [ 
+	inputs.nixvim.homeManagerModules.nixvim
+        ./home
+      ];
     };
 
     # Helper function for generating host configs
     mkHost = { hostname, username, desktop ? null, installer ? null, offline_installer ? null, platform ? "x86_64-linux", hm ? false, os_disk ? null, os_layout ? "btrfs", data_disks ? [], data_layout ? "mdraid", roles ? [] }: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit self inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout roles stateVersion;
+        inherit self nixvim inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout roles stateVersion;
       };
       modules = [
         ./hosts
+	inputs.nixvim.nixosModules.nixvim
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
         ++ (inputs.nixpkgs.lib.optionals (roles != []) [ sops-nix.nixosModules.sops ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {
-            # home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${username} = import ./home;
+            home-manager = {
+	      useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${username}.imports = [ 
+		inputs.nixvim.homeManagerModules.nixvim
+		./home
+	      ];
 
-            home-manager.extraSpecialArgs = {
-              inherit self inputs outputs desktop hostname platform username stateVersion;
+              extraSpecialArgs = {
+                inherit self inputs outputs desktop hostname platform username stateVersion;
+              };
             };
           }
         ]);
