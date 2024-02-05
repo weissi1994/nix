@@ -37,7 +37,7 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim.url = "git+https://gitlab.n0de.biz/daniel/nixvim?ref=main";
 
     sops-nix.url = "github:Mic92/sops-nix";
   };
