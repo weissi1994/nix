@@ -63,7 +63,6 @@
         inherit self inputs outputs desktop hostname platform username stateVersion;
       };
       modules = [ 
-	inputs.nixvim.homeManagerModules.nixvim
         ./home
       ];
     };
@@ -75,19 +74,17 @@
       };
       modules = [
         ./hosts
-	inputs.nixvim.nixosModules.nixvim
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
         ++ (inputs.nixpkgs.lib.optionals (roles != []) [ sops-nix.nixosModules.sops ])
         ++ (inputs.nixpkgs.lib.optionals (hm == true) [
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-	      useGlobalPkgs = true;
+              useGlobalPkgs = true;
               useUserPackages = true;
               users.${username}.imports = [ 
-		inputs.nixvim.homeManagerModules.nixvim
-		./home
-	      ];
+                ./home
+              ];
 
               extraSpecialArgs = {
                 inherit self inputs outputs desktop hostname platform username stateVersion;

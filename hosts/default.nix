@@ -79,11 +79,7 @@
       age
       zip
       sops
-      (nixvim.legacyPackages."${system}".makeNixvim {
-        colorschemes.gruvbox.enable = true;
-	plugins.lsp.servers.htmx.enable = false;
-	plugins.lsp.servers.htmx.package = pkgs.unstable.htmx-lsp;
-      })
+      nixvim.packages."${system}".default
       pciutils
       psmisc
       unzip

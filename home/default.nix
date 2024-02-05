@@ -30,45 +30,30 @@ in
     inherit username;
   };
 
-  programs.nixvim = {
-    enable = true;
-    defaultEditor = true;
+  # nixpkgs = {
+  #   # You can add overlays here
+  #   overlays = [
+  #     # Add overlays your own flake exports (from overlays and pkgs dir):
+  #     outputs.overlays.additions
+  #     outputs.overlays.modifications
+  #     outputs.overlays.unstable-packages
 
-    viAlias = true;
-    vimAlias = true;
-
-    luaLoader.enable = true;
-
-    # Highlight and remove extra white spaces
-    highlight.ExtraWhitespace.bg = "red";
-    match.ExtraWhitespace = "\\s\\+$";
-    plugins.lsp.servers.htmx.enable = false;
-  };
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
-      joypixels.acceptLicense = true;
-    };
-  };
+  #     # Or define it inline, for example:
+  #     # (final: prev: {
+  #     #   hi = final.hello.overrideAttrs (oldAttrs: {
+  #     #     patches = [ ./change-hello-to-hi.patch ];
+  #     #   });
+  #     # })
+  #   ];
+  #   # Configure your nixpkgs instance
+  #   config = {
+  #     # Disable if you don't want unfree packages
+  #     allowUnfree = true;
+  #     # Workaround for https://github.com/nix-community/home-manager/issues/2942
+  #     allowUnfreePredicate = _: true;
+  #     joypixels.acceptLicense = true;
+  #   };
+  # };
 
   nix = {
     # This will add each flake input as a registry
