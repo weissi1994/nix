@@ -37,6 +37,18 @@
           "data" = "1900";
         };
       };
+      chrome-dns = {
+        "name" = "allow-chrome-dns";
+        "enabled" = true;
+        "action" = "allow";
+        "duration" = "always";
+        "operator" = {
+          "type" = "simple";
+          "sensitive" = false;
+          "operand" = "dest.port";
+          "data" = "5353";
+        };
+      };
       spotify = {
         "name" = "allow-spotify";
         "enabled" = true;
@@ -47,6 +59,18 @@
           "sensitive" = false;
           "operand" = "dest.port";
           "data" = "57621";
+        };
+      };
+      spotify2 = {
+        "name" = "allow-spotify2";
+        "enabled" = true;
+        "action" = "allow";
+        "duration" = "always";
+        "operator" = {
+          "type" = "simple";
+          "sensitive" = false;
+          "operand" = "dest.port";
+          "data" = "52877";
         };
       };
       http = {
