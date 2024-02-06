@@ -25,9 +25,6 @@
 
       trip = "sudo trip --tui-theme-colors settings-dialog-bg-color=Black,help-dialog-bg-color=Black";
 
-      vimup = "nvim --headless \"+Lazy! update\" +qa";
-      nvim = "nvim -u ~/.config/nvim/init.lua";
-      vim = "nvim";
       lg = "lazygit";
       ag = "rg";
       ufwlog = "journalctl -k | grep \"IN=.*OUT=.*\" | less";
@@ -110,7 +107,6 @@
       n = {
         body = ''
           set filename (if set -q $argv[1]; echo $argv[1]; else; echo 'TODO'; end)
-          nvim "+ObsidianWorkspace Private" ~/notes/$filename.md $argv[2..-1]
         '';
       };
 
