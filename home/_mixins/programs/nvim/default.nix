@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  programs.neovim = {
+    defaultEditor = true;
+  };
+
   programs.nixvim = {
     enable = true;
     viAlias = true;
