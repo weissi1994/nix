@@ -1,5 +1,6 @@
 { config, lib, hostname, pkgs, username, ... }: {
   imports = [
+    ../../programs/nvim
     ../../programs/shell/fish.nix
   ];
   home = {

@@ -79,7 +79,6 @@
       age
       zip
       sops
-      nixvim.packages."${system}".default
       pciutils
       psmisc
       unzip
@@ -95,6 +94,12 @@
       SYSTEMD_EDITOR = "nvim";
       VISUAL = "nvim";
     };
+  };
+
+  programs.nixvim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
   };
 
   fonts = {
@@ -195,10 +200,6 @@
 
   programs = {
     command-not-found.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
     fish = {
       enable = true;
       interactiveShellInit = ''

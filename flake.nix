@@ -37,7 +37,7 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixvim.url = "git+https://gitlab.n0de.biz/daniel/nixvim?ref=main";
+    nixvim.url = "github:nix-community/nixvim/nixos-23.11";
 
     sops-nix.url = "github:Mic92/sops-nix";
   };
@@ -63,6 +63,7 @@
         inherit self inputs outputs desktop hostname platform username stateVersion;
       };
       modules = [ 
+        nixvim.homeManagerModules.nixvim
         ./home
       ];
     };
@@ -73,6 +74,7 @@
         inherit self nixvim inputs outputs desktop offline_installer hostname platform username os_disk os_layout data_disks data_layout roles stateVersion;
       };
       modules = [
+        nixvim.nixosModules.nixvim
         ./hosts
       ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
         ++ (inputs.nixpkgs.lib.optionals (roles != []) [ sops-nix.nixosModules.sops ])
@@ -83,6 +85,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.${username}.imports = [ 
+                nixvim.homeManagerModules.nixvim
                 ./home
               ];
 
