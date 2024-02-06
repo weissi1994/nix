@@ -1,65 +1,29 @@
-{ config, desktop, roles, hostname, inputs, lib, modulesPath, outputs, pkgs, platform, stateVersion, username, os_disk, os_layout, data_disks, data_layout, ... }:
+{ lib, pkgs, ... }:
 {
   services.opensnitch = {
     rules = {
-      google-chrome = {
-        "name" = "allow-chrome";
+      dns = {
+        "name" = "allow-dns";
         "enabled" = true;
         "action" = "allow";
         "duration" = "always";
         "operator" = {
           "type" = "simple";
           "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.unstable.google-chrome}/share/google/chrome/chrome";
+          "operand" = "dest.port";
+          "data" = "53";
         };
       };
-      spotify = {
-        "name" = "allow-spotfy";
+      https = {
+        "name" = "allow-https";
         "enabled" = true;
         "action" = "allow";
         "duration" = "always";
         "operator" = {
           "type" = "simple";
           "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.spotify}/share/spotify/.spotify-wrapped";
-        };
-      };
-      trip = {
-        "name" = "allow-trip";
-        "enabled" = true;
-        "action" = "allow";
-        "duration" = "always";
-        "operator" = {
-          "type" = "simple";
-          "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.trippy}/bin/trip";
-        };
-      };
-      telegram = {
-        "name" = "allow-telegram";
-        "enabled" = true;
-        "action" = "allow";
-        "duration" = "always";
-        "operator" = {
-          "type" = "simple";
-          "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.telegram-desktop}/bin/.telegram-desktop-wrapped";
-        };
-      };
-      avahi = {
-        "name" = "allow-avahi";
-        "enabled" = true;
-        "action" = "allow";
-        "duration" = "always";
-        "operator" = {
-          "type" = "simple";
-          "sensitive" = false;
-          "operand" = "process.path";
-          "data" = "${lib.getBin pkgs.avahi}/bin/avahi-daemon";
+          "operand" = "dest.port";
+          "data" = "443";
         };
       };
     };
