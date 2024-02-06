@@ -1,6 +1,18 @@
 {
   services.opensnitch = {
     rules = {
+      ssh = {
+        "name" = "allow-ssh";
+        "enabled" = true;
+        "action" = "allow";
+        "duration" = "always";
+        "operator" = {
+          "type" = "simple";
+          "sensitive" = false;
+          "operand" = "dest.port";
+          "data" = "22";
+        };
+      };
       dns = {
         "name" = "allow-dns";
         "enabled" = true;
