@@ -62,7 +62,7 @@
       extraSpecialArgs = {
         inherit self inputs outputs desktop hostname platform username stateVersion;
       };
-      modules = [ 
+      modules = [
         nixvim.homeManagerModules.nixvim
         ./home
       ];
@@ -84,7 +84,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.${username}.imports = [ 
+              users.${username}.imports = [
                 nixvim.homeManagerModules.nixvim
                 ./home
               ];
@@ -104,6 +104,11 @@
       "aarch64-darwin"
       "x86_64-darwin"
     ];
+
+    nixvim' = nixvim.legacyPackages."x86_64-linux";
+    nvim = nixvim'.makeNixvimWithModule {
+      module = ./home/_mixins/programs/nvim/config.nix;
+    };
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.11";
@@ -130,11 +135,13 @@
       in import ./shell.nix { inherit pkgs; }
     );
 
+    # run with
+    # NIXPKGS_ALLOW_UNFREE=1 nix --extra-experimental-features nix-command --extra-experimental-features flakes run . --impure
+    packages."x86_64-linux".default = nvim;
     # Custom packages; acessible via 'nix build', 'nix shell', etc
-    packages = forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./pkgs { inherit pkgs; }
-    );
+    # packages = forAllSystems (system:
+    #   import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
+    # );
 
     homeConfigurations = {
       # Only homemanager (for non-nixos systems)
@@ -158,13 +165,13 @@
       #  - nix build .#nixosConfigurations.iso.config.formats.docker
       #  See https://github.com/nix-community/nixos-generators
       #  for more options
-      #  
-      #  Add `offline_installer = "<TARGET_HOST>";` 
+      #
+      #  Add `offline_installer = "<TARGET_HOST>";`
       #  to bundle a pre-compiled system into the iso
       installer-sway     = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "sway"; };
       installer-pantheon = mkHost { hostname = "installer"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "pantheon"; };
 
-      # NixOs Servers managed by this flake 
+      # NixOs Servers managed by this flake
       xeus = mkHost {
         hostname = "xeus";
         username = "ion";
