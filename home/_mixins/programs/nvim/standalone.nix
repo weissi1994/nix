@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   config = {
-
     options = import ./config/options.nix;
     colorschemes = import ./config/colorschemes.nix;
     plugins = import ./config/plugins.nix;

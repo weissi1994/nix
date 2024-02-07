@@ -107,7 +107,7 @@
 
     nixvim' = nixvim.legacyPackages."x86_64-linux";
     nvim = nixvim'.makeNixvimWithModule {
-      module = ./home/_mixins/programs/nvim/config.nix;
+      module = ./home/_mixins/programs/nvim/standalone.nix;
     };
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
