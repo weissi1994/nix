@@ -25,6 +25,18 @@
           "data" = "53";
         };
       };
+      dhcp = {
+        "name" = "allow-dhcp";
+        "enabled" = true;
+        "action" = "allow";
+        "duration" = "always";
+        "operator" = {
+          "type" = "simple";
+          "sensitive" = false;
+          "operand" = "dest.port";
+          "data" = "67";
+        };
+      };
       chrome-notifications = {
         "name" = "allow-chrome-notifications";
         "enabled" = true;
